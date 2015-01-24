@@ -18,6 +18,10 @@
 
         }
     </style>
+    <script type="text/javascript" src="js/puzzleAhorcado.js">
+        </script>
+    <script type="text/javascript" src="js/vg.js">
+    </script>
 </head>
 <body onload="">
 
@@ -29,6 +33,7 @@
 
 	var game = new Phaser.Game(_screen.width, _screen.height, Phaser.AUTO, 'game');
 
+
 	game.state.add('Boot', Tunki.Boot);
 	game.state.add('Preloader', Tunki.Preloader);
 	game.state.add('MainMenu', Tunki.Menu);
@@ -39,6 +44,7 @@
 })();
 
 </script>
+
 
 </body>
 </html>
