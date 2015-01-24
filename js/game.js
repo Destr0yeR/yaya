@@ -10,33 +10,32 @@ var Enigma = function(){
 	};
 };
 
-var player = function(){
-	this.touching_up 	= false;
-	this.touching_down 	= false;
-	this.touching_left 	= false;
-	this.touching_right = false;
-
-	this.is_colliding 	= false;
-	this.was_colliding	= false;
-};
-
-var enigmaText;
-var enigmaBackground;
-var enigma = new Enigma();
-var messages;
-
-var cursors;
-
-var objects;
-var iterations 		= 0;
-var is_overlapped 	= false;
-var was_overlapped 	= false;
-
-var pictures_stack;
-var pictures;
 
 Tunki.Game = function(game) {
+	this.player = function(){
+		this.touching_up 	= false;
+		this.touching_down 	= false;
+		this.touching_left 	= false;
+		this.touching_right = false;
 
+		this.is_colliding 	= false;
+		this.was_colliding	= false;
+	};
+
+	this.enigmaText;
+	this.enigmaBackground;
+	this.enigma = new Enigma();
+	this.messages;
+
+	this.cursors;
+
+	this.objects;
+	this.iterations 		= 0;
+	this.is_overlapped 	= false;
+	this.was_overlapped 	= false;
+
+	this.pictures_stack;
+	this.pictures;
 };
 
 Tunki.Game.prototype = {
@@ -45,20 +44,20 @@ Tunki.Game.prototype = {
 
 	    this.game.add.sprite(0, 0, 'sky');   
 
-	   	player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
+	   	this.player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
 
-	   	this.game.physics.arcade.enable(player);
+	   	this.game.physics.arcade.enable(this.player);
 
-	   	player.body.bounce.y = 0.2;
+	   	this.player.body.bounce.y = 0.2;
 
-	    player.body.collideWorldBounds = true;
-	    player.animations.add('left', [0, 1, 2, 3], 10, true);
-	    player.animations.add('right', [5, 6, 7, 8], 10, true);
+	    this.player.body.collideWorldBounds = true;
+	    this.player.animations.add('left', [0, 1, 2, 3], 10, true);
+	    this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-	    objects = this.game.add.group();
-	    objects.enableBody = true;
+	    this.objects = this.game.add.group();
+	    this.objects.enableBody = true;
 
-	    var object = objects.create(400, 300, 'star');
+	    var object = this.objects.create(400, 300, 'star');
 
 
 	   	pictures_stack = this.game.add.group();
@@ -76,53 +75,51 @@ Tunki.Game.prototype = {
 		   	pictures.push(picture);						
 		}
 
-
 	   	this.createEnigma();
 
-	    cursors = this.game.input.keyboard.createCursorKeys();
+	    this.cursors = this.game.input.keyboard.createCursorKeys();
 	},
 
 	update: function() {
-		var collide = this.game.physics.arcade.collide(player, pictures_stack, this.createEnigma, null, this);
-
+		var collide = this.game.physics.arcade.collide(this.player, pictures_stack, this.createEnigma, null, this);
 		if(collide)
 		{
-			player.is_colliding = true;
+			this.player.is_colliding = true;
 		}
 		else
 		{
-			player.is_colliding = false;
+			this.player.is_colliding = false;
 		}
 
-	    player.body.velocity.x = 0;
-	    player.body.velocity.y = 0;
+	    this.player.body.velocity.x = 0;
+	    this.player.body.velocity.y = 0;
 
-	    if (cursors.left.isDown)
+	    if (this.cursors.left.isDown)
 	    {
-	        player.body.velocity.x = -150;
+	        this.player.body.velocity.x = -150;
 
-	        player.animations.play('left');
+	        this.player.animations.play('left');
 	    }
-	    else if (cursors.right.isDown)
+	    else if (this.cursors.right.isDown)
 	    {
-	        player.body.velocity.x = 150;
+	        this.player.body.velocity.x = 150;
 
-	        player.animations.play('right');
+	        this.player.animations.play('right');
 	    }
 	    else
 	    {
-	        player.animations.stop();
+	        this.player.animations.stop();
 
-	        player.frame = 4;
+	        this.player.frame = 4;
 	    }
 	    
-	    if (cursors.up.isDown)
+	    if (this.cursors.up.isDown)
 	    {
-	        player.body.velocity.y = -150;
+	        this.player.body.velocity.y = -150;
 	    }
-	    else if (cursors.down.isDown)
+	    else if (this.cursors.down.isDown)
 	    {
-	    	player.body.velocity.y = 150;
+	    	this.player.body.velocity.y = 150;
 	    }
 		
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.A))
@@ -134,24 +131,24 @@ Tunki.Game.prototype = {
 	destroyEnigma: function() {
 		enigmaText.text = "";
 		messages.destroy();
-		enigma.active = false;
+		this.enigma.active = false;
 	},
 
 	createEnigma: function() {
 		console.log("createEnigma");
 
-		if(player.is_colliding)
+		if(this.player.is_colliding)
 		{
-			player.was_colliding = true;
+			this.player.was_colliding = true;
 		}
 		else
 		{
-			player.was_colliding = false;
+			this.player.was_colliding = false;
 		}
 
-		player.is_colliding = true;
+		this.player.is_colliding = true;
 
-		if(player.is_colliding && !player.was_colliding && !enigma.active)
+		if(this.player.is_colliding && !this.player.was_colliding && !this.enigma.active)
 		{
 			messages = this.game.add.group();
 		   	messages.enableBody = false;
@@ -162,7 +159,7 @@ Tunki.Game.prototype = {
 
 		   	//add enigma text
 
-		   	enigmaText = this.game.add.text(16, 16, enigma.message , { fontSize: '32px', fill: '#000' });
+		   	enigmaText = this.game.add.text(16, 16, this.enigma.message , { fontSize: '32px', fill: '#000' });
 
 		   	//add enigma graphic input for close
 		   	enigmaClose.events.onInputDown.add(this.destroyEnigma, this);
@@ -170,8 +167,8 @@ Tunki.Game.prototype = {
 		   	//set enigma text on center 
 		   	enigmaText.x = _screen.width/2 - enigmaText.width/2;
 		   	enigmaText.y = _screen.height/2 - enigmaText.height/2;
-		   	enigma.active = true;
-		   	console.log(iterations);
+		   	this.enigma.active = true;
+		   	console.log(this.iterations);
 		}
 	}
 };
