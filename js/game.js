@@ -127,7 +127,7 @@ Tunki.Game.prototype = {
 	    {
 	        this.player.body.velocity.x = -150;
 
-	        if(this.player.body.x < 140)
+	        if(this.player.body.x < 100)
 	        {
 	        	this.player.body.velocity.x = 0;
 	        }
@@ -138,7 +138,7 @@ Tunki.Game.prototype = {
 	    {
 	        this.player.body.velocity.x = 150;
 
-	        if(this.player.body.x > 660)
+	        if(this.player.body.x > 600)
 	        {
 	        	this.player.body.velocity.x = 0;
 	        }
