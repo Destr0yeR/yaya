@@ -39,6 +39,8 @@ Tunki.Preloader.prototype = {
 	    this.load.image('door', 'assets/door.png');
 
 	    this.load.image('wall', 'assets/cuadrado.png');
+	    
+	    this.load.audio('museosound', ['assets/museo.mp3']);
 
 	},
 	create: function() {

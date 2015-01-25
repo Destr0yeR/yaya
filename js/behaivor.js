@@ -2,7 +2,7 @@
 
 var Comportamiento=function(game){
     this.game = game;
-     
+    
 }
 
 
@@ -17,6 +17,13 @@ Comportamiento.prototype={
         this.count = count;
         this.orientation = orientation;
         
+<<<<<<< HEAD
+        for (i = 0; i < this.WALLZISE; i++){
+            this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
+        }
+        for (i = 0; i < this.WALLZISE; i++){
+            this.wallB.push(this.walls.create(710, 0+60*i, 'killerwall'));
+=======
         if(count%2 == 1)
         {
             for (i = 0; i < this.WALLZISE; i++){
@@ -35,11 +42,13 @@ Comportamiento.prototype={
                 if(orientation == 'horizontal')
                     this.wallB.push(this.walls.create(700, 0+100*i, 'killerwall'));
             }
+>>>>>>> 515c434c5185075a1e03a1a1fb941b2a90018dda
         }
         this.objects = this.game.add.group();
         this.objects.enableBody = true;
         this.startcrashing = false;
         this.timestart = 0;
+        this.active = false;
     },
     
     update: function(){
@@ -63,15 +72,14 @@ Comportamiento.prototype={
                     this.wallB[i].body.velocity.x = -WallVelocity;
             }
         }
-            
-            
-             //this.game.physics.arcade.overlap(this.player, this.walls, this.crash());
-         this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
+    },
+    setActive :function(value){
+        this.active=value;
     },
     
     crash : function(){
-                //console.log("xD");
-                
+        if(this.active){
+                //console.log("xD");        
                 
                 //alert(this.objects);
                 this.blood = this.objects.create(this.player.body.x+10,this.player.body.y+10, 'blood');
@@ -93,11 +101,14 @@ Comportamiento.prototype={
                         
                     }
                 }
+          }
     },
     
     destroy_all: function(){
-        this.walls.destroy();
-        this.objects.destroy();
+        if(this.active){
+            this.walls.destroy();
+            this.objects.destroy();
+        }
     } 
     
 };
