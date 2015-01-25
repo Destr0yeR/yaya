@@ -60,6 +60,12 @@ Tunki.Game = function(game) {
 	this.doors_stack_right;
 
 	this.map = new Map('background_game', triggers_map[Scenario]);
+	this.comportamiento;
+
+	this.setComportamiento = function(comportamiento)
+	{
+		this.comportamiento = comportamiento;
+	}
 
 };
 
@@ -87,111 +93,6 @@ Tunki.Game.prototype = {
 
 	    var object = this.objects.create(400, 300, 'star');
 
-
-	   	pictures_stack = this.game.add.group();
-	   	pictures_stack.enableBody = true;
-
-		vicuna_stack = this.game.add.group();
-	   	vicuna_stack.enableBody = true;
-
-		kero_stack = this.game.add.group();
-	   	kero_stack.enableBody = true;
-
-		ekeko_stack = this.game.add.group();
-	   	ekeko_stack.enableBody = true;
-	   	
-	   	luna_stack = this.game.add.group();
-	   	luna_stack.enableBody = true;
-
-	   	doors_stack = this.game.add.group();
-		doors_stack.enableBody = true;	
-
-		doors_stack_up = this.game.add.group();
-		doors_stack_up.enableBody = true;		
-
-		doors_stack_down = this.game.add.group();
-		doors_stack_down.enableBody = true;
-
-		doors_stack_left = this.game.add.group();
-		doors_stack_left.enableBody = true;
-
-		doors_stack_right = this.game.add.group();
-		doors_stack_right.enableBody = true;
-
-	   	pictures 	= new Array();
-	   	vicunas     = new Array(); 
-	   	keros     = new Array();
-	   	ekekos     = new Array();
-	   	lunas     = new Array(); 		
-	   	
-	   	doors 		= new Array();
-	   	doors_up 	= new Array();
-	   	doors_down  = new Array();
-	   	doors_left  = new Array();
-	   	doors_right = new Array();
-
- 
-		for (var  i = 0 ; i < 6 ;  i++ )
-	    {
-	    	for(var j = 0 ; j < 8 ; j++ )
-	    	{
-	    		var trigger = this.map.trigger;
-	    		if( trigger[i][j] == Picture )
-	    		{
-		    		var picture = pictures_stack.create( j*100 , i*100 , 'picture');
-				   	picture.body.immovable = true;
-				   	pictures.push(picture);	
-	    		}
-			    else if ( trigger[i][j] == Vicuna )
-	    		{
-	    			var vicuna = vicuna_stack.create( j*100 , i*100 , 'vicuna');
-				   	vicuna.body.immovable = true;
-				    vicunas.push(vicuna);	  		
-	    		}
-	    		else if ( trigger[i][j] == Kero )
-	    		{
-	    			var kero = kero_stack.create( j*100 , i*100 , 'kero');
-				   	kero.body.immovable = true;
-				    keros.push(kero);	  		
-	    		}
-	    		else if ( trigger[i][j] == Ekeko )
-	    		{
-	    			var ekeko = ekeko_stack.create( j*100 , i*100 , 'ekeko');
-				   	ekeko.body.immovable = true;
-				    ekekos.push(ekeko);	  		
-	    		}
-	    		else if ( trigger[i][j] == Luna )
-	    		{
-	    			var luna = luna_stack.create( j*100 , i*100 , 'luna');
-				   	luna.body.immovable = true;
-				    lunas.push(luna);	  		
-	    		}
-	    		else if ( trigger[i][j] == DoorUp )
-	    		{
-	    			var door = doors_stack_up.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_up.push(door);	  		
-	    		}
-	    		else if ( trigger[i][j] == DoorDown ) 
-	    		{
-	    			var door = doors_stack_down.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_down.push(door);
-	    		}
-	    		else if ( trigger[i][j] == DoorLeft ) 
-	    		{
-	    			var door = doors_stack_left.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_left.push(door);
-	    		}
-	    		else if ( trigger[i][j] == DoorRight )
-	    		{
-	    			var door = doors_stack_right.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_right.push(door);
-	    		}
-	    	}
-	    }
 	    this.set_up();
 	   	
 
@@ -256,6 +157,8 @@ Tunki.Game.prototype = {
 	    {
 	    	this.game.state.start('GameOver');
 	    }
+
+	    this.comportamiento.update();
 	},
 
 	destroyEnigma: function() {
@@ -348,7 +251,7 @@ Tunki.Game.prototype = {
 	},
 	changeScenarie: function(scene){
 		Scenario = scene;
-		this.delete_all();
+		this.destroy_all();
 		this.set_up();
 	},
 	findScenarie: function(scene, where)
@@ -421,6 +324,20 @@ Tunki.Game.prototype = {
 		this.player.body.x = _screen.width/2-50;
 		this.player.body.y = _screen.height/2-50;
 
+		this.pictures_stack = this.game.add.group();
+	   	this.pictures_stack.enableBody = true;
+
+		this.vicuna_stack = this.game.add.group();
+	   	this.vicuna_stack.enableBody = true;
+
+		this.kero_stack = this.game.add.group();
+	   	this.kero_stack.enableBody = true;
+
+		this.ekeko_stack = this.game.add.group();
+	   	this.ekeko_stack.enableBody = true;
+	   	
+	   	this.luna_stack = this.game.add.group();
+	   	this.luna_stack.enableBody = true;
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
@@ -484,13 +401,50 @@ Tunki.Game.prototype = {
 				   	door.body.immovable = true;
 				 	doors_right.push(door);
 	    		}
+			    else if ( trigger[i][j] == Vicuna )
+	    		{
+	    			var vicuna = vicuna_stack.create( j*100 , i*100 , 'vicuna');
+				   	vicuna.body.immovable = true;
+				    vicunas.push(vicuna);	  		
+	    		}
+	    		else if ( trigger[i][j] == Kero )
+	    		{
+	    			var kero = kero_stack.create( j*100 , i*100 , 'kero');
+				   	kero.body.immovable = true;
+				    keros.push(kero);	  		
+	    		}
+	    		else if ( trigger[i][j] == Ekeko )
+	    		{
+	    			var ekeko = ekeko_stack.create( j*100 , i*100 , 'ekeko');
+				   	ekeko.body.immovable = true;
+				    ekekos.push(ekeko);	  		
+	    		}
+	    		else if ( trigger[i][j] == Luna )
+	    		{
+	    			var luna = luna_stack.create( j*100 , i*100 , 'luna');
+				   	luna.body.immovable = true;
+				    lunas.push(luna);	  		
+	    		}
 	    	}
 	    }
+
+	    this.comportamiento.setUp();
 	    	
 	    this.createEnigma();
 	},
 
-	delete_all: function() {
+	destroy_all: function() {
+
+		this.pictures_stack.destroy();
+
+		this.vicuna_stack.destroy();
+
+		this.kero_stack.destroy();
+
+		this.ekeko_stack.destroy();
+	   	
+	   	this.luna_stack.destroy();
+
 		this.pictures_stack.destroy();
 
 	   	this.doors_stack.destroy();	
@@ -502,5 +456,7 @@ Tunki.Game.prototype = {
 		this.doors_stack_left.destroy();
 
 		this.doors_stack_right.destroy();
+
+		this.comportamiento.destroy();
 	}
 };
