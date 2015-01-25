@@ -70,6 +70,9 @@ Tunki.Game = function(game) {
 	};
 	this.comportamiento = new Comportamiento(game);
     console.log(this.comportamiento);
+    
+     this.startingGame = true;
+     this.initialMessageTime;
 };
 
 Tunki.Game.prototype = {
@@ -105,9 +108,22 @@ Tunki.Game.prototype = {
 	    
 	    this.music = this.game.add.audio('museosound',1,true);
         this.music.play('',0,1,true);
+        
+        
 	},
 
 	update: function() {
+	
+	    if(this.startingGame){
+	        var d = new Date();
+	        var time = d.getTime();
+	        if(time>this.initialMessageTime+1000){
+	            console.log('tiempo actual :'+time );
+	            this.startingGame = false;
+       	        this.destroyEnigma();
+       	        
+       	    }
+	    }
 
 		var key_horizontal = true;
 		var key_vertical = true;
@@ -235,7 +251,7 @@ Tunki.Game.prototype = {
 
 		   	//add enigma text
 
-		   	enigmaText = this.game.add.text(16, 16, this.enigma.message , { fontSize: '32px', fill: '#000' });
+		   	enigmaText = this.game.add.text(16, 16, this.enigma.message , { fontSize: '32px', fill: '#fff' });
 
 		   	//add enigma graphic input for close
 		   	enigmaClose.events.onInputDown.add(this.destroyEnigma, this);
@@ -542,7 +558,7 @@ Tunki.Game.prototype = {
 	   	tierras = new Array();
 	   	estrellas = new Array();
 	   	soles = new Array();
-	   	
+	   	vicunas = new Array();
 
 	   	this.door_down;
 	   	this.door_up;
@@ -566,7 +582,7 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorUp )
 	    		{
-	    			this.door_up = this.doors_stack_up.create( j*100 , i*100 , 'door_up');
+	    			this.door_up = this.doors_stack_up.create( j*100 + 20, i*100 -10, 'door_up');
 	    			this.door_up.animations.add('open', [2, 1, 0],5,true);
 				   	this.door_up.body.immovable = true;
 				 	doors_up.push(this.door_up);	  		
@@ -580,15 +596,15 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorLeft ) 
 	    		{
-	    			this.door_left = this.doors_stack_left.create( j*100 , i*100 , 'door_left');
+	    			this.door_left = this.doors_stack_left.create( j*100 + 110, i*100 + 50 , 'door_left');
 	    			this.door_left.animations.add('open',[0,1,2],5,true);
 				   	this.door_left.body.immovable = true;
 				 	doors_left.push(this.door_left);
 	    		}
 	    		else if ( trigger[i][j] == DoorRight )
 	    		{
-	    			this.door_right = this.doors_stack_right.create( j*100 , i*100 , 'door_right');
-	    			this.door_right.animations.add('open',[0,1,2],5,true);
+	    			this.door_right = this.doors_stack_right.create( j*100 -80, i*100 + 50 , 'door_right');
+	    			this.door_right.animations.add('open',[2,1,0],5,true);
 				   	this.door_right.body.immovable = true;
 				 	doors_right.push(this.door_right);
 	    		}
@@ -729,6 +745,7 @@ Tunki.Game.prototype = {
 	   	}
 	    	
 	    this.createEnigma();
+	    
 	},
 
 	destroy_all: function() {

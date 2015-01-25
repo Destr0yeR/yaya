@@ -68,6 +68,11 @@ Tunki.Game = function(game) {
 		this.comportamiento = comportamiento;
 	};
 	this.comportamiento = new Comportamiento(game);
+
+    console.log(this.comportamiento);
+    
+     this.startingGame = true;
+     this.initialMessageTime;
 };
 
 Tunki.Game.prototype = {
@@ -103,9 +108,24 @@ Tunki.Game.prototype = {
 	    
 	    this.music = this.game.add.audio('museosound',1,true);
         this.music.play('',0,1,true);
+        
+        this.startingGame = true;
+        var d = new Date();
+        this.initialMessageTime = d.getTime();
 	},
 
 	update: function() {
+	
+	    if(this.startingGame){
+	        var d = new Date();
+	        var time = d.getTime();
+	        if(time>this.initialMessageTime+1000){
+	            console.log('tiempo actual :'+time );
+	            this.startingGame = false;
+       	        this.destroyEnigma();
+       	        
+       	    }
+	    }
 
 		var key_horizontal = true;
 		var key_vertical = true;
@@ -238,7 +258,7 @@ Tunki.Game.prototype = {
 
 		   	//add enigma text
 
-		   	enigmaText = this.game.add.text(16, 16, this.enigma.message , { fontSize: '32px', fill: '#000' });
+		   	enigmaText = this.game.add.text(16, 16, this.enigma.message , { fontSize: '32px', fill: '#fff' });
 
 		   	//add enigma graphic input for close
 		   	enigmaClose.events.onInputDown.add(this.destroyEnigma, this);
@@ -729,6 +749,7 @@ Tunki.Game.prototype = {
 	   	}
 	    	
 	    this.createEnigma();
+	    
 	},
 
 	destroy_all: function() {

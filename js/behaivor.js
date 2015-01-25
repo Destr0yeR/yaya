@@ -76,16 +76,19 @@ Comportamiento.prototype={
                 
                 //alert(this.objects);
                 this.blood = this.objects.create(this.player.body.x+10,this.player.body.y+10, 'blood');
+
                 if(this.startcrashing == false){
                     this.startcrashing = true;
                     var currentdate = new Date();
                     this.timestart =currentdate.getTime();
+
                  
                 }else{
                     var currentdate = new Date();
                     var actualtime =currentdate.getTime();;
                     if(actualtime > this.timestart + 2000){
                         this.startcrashing = false;
+
                         this.game.state.start('GameOver');
                         
                     }
