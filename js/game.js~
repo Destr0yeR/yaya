@@ -87,7 +87,7 @@ Tunki.Game.prototype = {
 	   	ekeko_stack.enableBody = true;
 	   	
 	   	luna_stack = this.game.add.group();
-	   	luna_stack.enableBody = true;
+	    luna_stack.enableBody = true;
 
 	   	doors_stack = this.game.add.group();
 		doors_stack.enableBody = true;	
