@@ -60,6 +60,8 @@ Tunki.Game = function(game) {
 	this.comportamiento;
 	this.comportamiento_active = false;
 	this.music;
+
+	this.timestart = 0;
     
     
 	this.setComportamiento = function(comportamiento)
@@ -128,7 +130,7 @@ Tunki.Game.prototype = {
 
 	    this.player.body.velocity.x = 0;
 	    this.player.body.velocity.y = 0;
-
+	    
 	    if (this.cursors.left.isDown)
 	    {
 	        this.player.body.velocity.x = -150;
@@ -247,35 +249,92 @@ Tunki.Game.prototype = {
 	},
 	changeScenarieUp: function(){
 		scene = this.findScenarie(Scenario,'up');
+		this.door_up.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 	},
 	changeScenarieDown: function(){
 		scene = this.findScenarie(Scenario,'down');
+		this.door_down.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
-		}
+	    if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
+	    }
+
 	},
 	changeScenarieLeft: function(){
 		scene = this.findScenarie(Scenario,'left');
+		this.door_left.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 
 	},
 	changeScenarieRight: function(){
 		scene = this.findScenarie(Scenario,'right');
+		this.door_right.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 	},
 	changeScenarie: function(scene){
@@ -393,6 +452,11 @@ Tunki.Game.prototype = {
 	   	doors_left  = new Array();
 	   	doors_right = new Array();
 
+	   	this.door_down;
+	   	this.door_up;
+	   	this.door_left;
+	   	this.door_right;
+
 	   	var is_there_a_picture;
  
 		for (var  i = 0 ; i < 6 ;  i++ )
@@ -410,27 +474,31 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorUp )
 	    		{
-	    			var door = this.doors_stack_up.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_up.push(door);	  		
+	    			this.door_up = this.doors_stack_up.create( j*100 , i*100 , 'door_up');
+	    			this.door_up.animations.add('open', [2, 1, 0],5,true);
+				   	this.door_up.body.immovable = true;
+				 	doors_up.push(this.door_up);	  		
 	    		}
 	    		else if ( trigger[i][j] == DoorDown ) 
 	    		{
-	    			var door = this.doors_stack_down.create( j*100 + 30, i*100 + 55, 'door_down');
-				   	door.body.immovable = true;
-				 	doors_down.push(door);
+	    			this.door_down = this.doors_stack_down.create( j*100 + 30, i*100 + 55, 'door_down');
+	    			this.door_down.animations.add('open', [0, 1, 2],5,true);
+				   	this.door_down.body.immovable = true;
+				 	doors_down.push(this.door_down);
 	    		}
 	    		else if ( trigger[i][j] == DoorLeft ) 
 	    		{
-	    			var door = this.doors_stack_left.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_left.push(door);
+	    			this.door_left = this.doors_stack_left.create( j*100 , i*100 , 'door_left');
+	    			this.door_left.animations.add('open',[0,1,2],5,true);
+				   	this.door_left.body.immovable = true;
+				 	doors_left.push(this.door_left);
 	    		}
 	    		else if ( trigger[i][j] == DoorRight )
 	    		{
-	    			var door = this.doors_stack_right.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_right.push(door);
+	    			this.door_right = this.doors_stack_right.create( j*100 , i*100 , 'door_right');
+	    			this.door_right.animations.add('open',[0,1,2],5,true);
+				   	this.door_right.body.immovable = true;
+				 	doors_right.push(this.door_right);
 	    		}
 			    else if ( trigger[i][j] == Vicuna )
 	    		{

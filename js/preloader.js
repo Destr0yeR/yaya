@@ -53,6 +53,9 @@ Tunki.Preloader.prototype = {
 	    this.load.image('f_center', 'assets/fondos/f_centro.jpg');
 
 	    this.load.spritesheet('door_down', 'assets/door_down.png', 125 , 60);
+	    this.load.spritesheet('door_up', 'assets/door_up.png', 125 , 60);
+	    this.load.spritesheet('door_left', 'assets/door_left.png', 60 , 125);
+	    this.load.spritesheet('door_right', 'assets/door_right.png', 60 , 125);
 
 	    this.load.image('column_red', 'assets/fondos/ojonegro.jpg');
 	    this.load.image('column_black', 'assets/fondos/ojorojo.jpg');
