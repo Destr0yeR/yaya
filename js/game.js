@@ -52,15 +52,13 @@ Tunki.Game = function(game) {
    	this.doors_stack;
 
 	this.doors_stack_up;	
-
 	this.doors_stack_down;
-
 	this.doors_stack_left;
-
 	this.doors_stack_right;
 
 	this.map = new Map('background_game', triggers_map[Scenario]);
 	this.comportamiento;
+	this.comportamiento_active = false;
     
     
 	this.setComportamiento = function(comportamiento)
@@ -134,11 +132,21 @@ Tunki.Game.prototype = {
 	    {
 	        this.player.body.velocity.x = -150;
 
+	        if(this.player.body.x < 140)
+	        {
+	        	this.player.body.velocity.x = 0;
+	        }
+
 	        this.player.animations.play('left');
 	    }
 	    else if (this.cursors.right.isDown)
 	    {
 	        this.player.body.velocity.x = 150;
+
+	        if(this.player.body.x > 660)
+	        {
+	        	this.player.body.velocity.x = 0;
+	        }
 
 	        this.player.animations.play('right');
 	    }
@@ -165,7 +173,10 @@ Tunki.Game.prototype = {
 	    	this.game.state.start('GameOver');
 	    }
 
-	    this.comportamiento.update();
+	    if(this.comportamiento_active)
+	    {
+	    	this.comportamiento.update();
+	    }
 	},
 
 	destroyEnigma: function() {
@@ -371,6 +382,7 @@ Tunki.Game.prototype = {
 	   	doors_left  = new Array();
 	   	doors_right = new Array();
 
+	   	var is_there_a_picture;
  
 		for (var  i = 0 ; i < 6 ;  i++ )
 	    {
@@ -383,6 +395,7 @@ Tunki.Game.prototype = {
 		    		var picture = this.pictures_stack.create( j*100 , i*100 , 'picture');
 				   	picture.body.immovable = true;
 				   	pictures.push(picture);	
+				   	is_there_a_picture = true;
 	    		}
 	    		else if ( trigger[i][j] == DoorUp )
 	    		{
@@ -435,7 +448,36 @@ Tunki.Game.prototype = {
 	    	}
 	    }
 
-	    this.comportamiento.setUp(this.player);
+	    if(is_there_a_picture)
+	    {
+	    	this.comportamiento_active = false;
+	    }
+	    else
+	    {
+	    	this.comportamiento_active = true;
+	    }
+
+	   	if(this.comportamiento_active)
+	   	{
+	   		var random	= Math.floor(Math.random()*4);
+
+	   		var column = random;
+	   		random	= Math.floor(Math.random()*4);
+	   		var orientation;
+
+	   		console.log("random: "+random);
+
+	   		if(random%2)
+	   		{
+	   			orientation = 'vertical';
+	   		}
+	   		else
+	   		{
+	   			orientation = 'horizontal';
+	   		}
+
+	    	this.comportamiento.setUp(this.player,column,orientation);
+	   	}
 	    	
 	    this.createEnigma();
 	},
@@ -464,6 +506,11 @@ Tunki.Game.prototype = {
 
 		this.doors_stack_right.destroy();
 
-		this.comportamiento.destroy_all();
+		if(this.comportamiento_active)
+		{
+			this.comportamiento.destroy_all();
+		}
+
+		this.comportamiento_active = false;
 	}
 };
