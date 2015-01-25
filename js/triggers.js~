@@ -5,7 +5,7 @@ var triggers_map = [
 	[DoorLeft	,0		,0		,Ekeko		,0		,0		,0		,DoorRight	],
 	[0		,0		,0		,0		,0		,Kero		,0		,0		],
 	[0		,0		,Picture	,0		,0		,0		,0		,0		],
-	[0		,Vicuna		,0		,Luna		,0		,0		,Picture	,0		],
+	[0		,Vicuna		,0		,0		,0		,0		,Picture	,0		],
 	[0		,0		,0		,0		,0		,DoorDown	,0		,0		]
 ]
 ,

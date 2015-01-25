@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
 	<meta charset="UTF-8" />
-    <title>Tinkuy the braveheart</title>
+    <title>Phaser - Making your first game, part 9</title>
 	<link rel="stylesheet" href="css/main.css">
 	<!--
 		Framework
@@ -14,7 +14,6 @@
 	-->
 	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript" src="js/global_map.js"></script>
-	<script type="text/javascript" src="js/puzzles.js"></script>
 
 	<!--
 		Archivo de datos del jugador
@@ -41,6 +40,21 @@
 	<script type="text/javascript" src="js/howto.js"></script>
 	<script type="text/javascript" src="js/game.js"></script>
 	<script type="text/javascript" src="js/gameover.js"></script>
+
+	<!--
+		Escenarios
+	-->
+
+	<script type="text/javascript" src="js/Scenarios/Scenario1.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario2.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario3.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario4.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario5.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario6.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario7.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario8.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario9.js"></script>
+	<script type="text/javascript" src="js/Scenarios/Scenario10.js"></script>
 
 
     <style type="text/css">
@@ -69,6 +83,17 @@
 	game.state.add('MainMenu', Tunki.Menu);
 	game.state.add('Howto', Tunki.Howto);
 	game.state.add('Game', Tunki.Game);
+
+	game.state.add('Scenario1', Tunki.Scenario1);
+	game.state.add('Scenario2', Tunki.Scenario2);
+	game.state.add('Scenario3', Tunki.Scenario3);
+	game.state.add('Scenario4', Tunki.Scenario4);
+	game.state.add('Scenario5', Tunki.Scenario5);
+	game.state.add('Scenario6', Tunki.Scenario6);
+	game.state.add('Scenario7', Tunki.Scenario7);
+	game.state.add('Scenario8', Tunki.Scenario8);
+	game.state.add('Scenario9', Tunki.Scenario9);
+	game.state.add('Scenario10', Tunki.Scenario10);
 
 	game.state.add('GameOver', Tunki.GameOver);
 	game.state.start('Boot');

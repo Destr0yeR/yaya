@@ -5,8 +5,11 @@ var Screen = function(){
 };
 
 
+<<<<<<< HEAD
 var Scenario = 0;
-
+=======
+var Scenario = 4;
+>>>>>>> 179f3631376b1f7c7a8ddfc5f29a1296851b320a
 
 var DoorUp   	= 1;
 var DoorDown 	= 2;
@@ -14,6 +17,7 @@ var DoorRight	= 3;
 var DoorLeft	= 4;
 
 var Picture = 5;
+<<<<<<< HEAD
 
 var Vicuna = 6
 var Kero = 7
@@ -21,3 +25,5 @@ var Ekeko = 8
 var Luna = 9
 
 
+=======
+>>>>>>> 179f3631376b1f7c7a8ddfc5f29a1296851b320a
