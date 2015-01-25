@@ -7,19 +7,34 @@ var Comportamiento=function(game){
 
 
 Comportamiento.prototype={    
-    setUp : function(player){
+    setUp : function(player, count, orientation){
         this.player = player;
-        this.wallA=new Array();
-        this.wallB=new Array();
+        this.wallA  =new Array();
+        this.wallB  =new Array();
         this.WALLZISE = 10;
         this.walls = this.game.add.group();
         this.walls.enableBody = true;
+        this.count = count;
+        this.orientation = orientation;
         
-        for (i = 0; i < this.WALLZISE; i++){
-                this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
+        if(count%2 == 1)
+        {
+            for (i = 0; i < this.WALLZISE; i++){
+                if(orientation == 'vertical')
+                    this.wallA.push(this.walls.create(0+100*i, 0, 'killerwall'));
+                if(orientation == 'horizontal')
+                    this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
+            }
         }
-        for (i = 0; i < this.WALLZISE; i++){
-                this.wallB.push(this.walls.create(710, 0+60*i, 'killerwall'));
+
+        if(Math.floor(count/2) == 1)
+        {
+            for (i = 0; i < this.WALLZISE; i++){
+                if(orientation == 'vertical')
+                    this.wallB.push(this.walls.create(0+100*i, 500, 'killerwall'));
+                if(orientation == 'horizontal')
+                    this.wallB.push(this.walls.create(700, 0+100*i, 'killerwall'));
+            }
         }
         this.objects = this.game.add.group();
         this.objects.enableBody = true;
@@ -28,11 +43,25 @@ Comportamiento.prototype={
     },
     
     update: function(){
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallA[i].body.velocity.x = WallVelocity;
+
+        if(this.count%2 == 1)
+        {
+            for (i = 0; i < this.WALLZISE; i++){
+                if(this.orientation == 'vertical')
+                    this.wallA[i].body.velocity.y = WallVelocity;
+                if(this.orientation == 'horizontal')
+                    this.wallA[i].body.velocity.x = WallVelocity;
+            }
         }
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallB[i].body.velocity.x = -WallVelocity;
+
+        if(Math.floor(this.count/2) == 1)
+        {
+            for (i = 0; i < this.WALLZISE; i++){
+                if(this.orientation == 'vertical')
+                    this.wallB[i].body.velocity.y = -WallVelocity;
+                if(this.orientation == 'horizontal')
+                    this.wallB[i].body.velocity.x = -WallVelocity;
+            }
         }
             
             
@@ -56,7 +85,7 @@ Comportamiento.prototype={
                 }else{
                     var currentdate = new Date();
                     var actualtime =currentdate.getTime();;
-                    if(actualtime > this.timestart + 3000){
+                    if(actualtime > this.timestart + 2000){
                         this.startcrashing = false;
                        // console.log('inicio '+this.timestart);
                         console.log('fin '+actualtime);
