@@ -59,6 +59,7 @@ Tunki.Game = function(game) {
 	this.map = new Map('background_game', triggers_map[Scenario]);
 	this.comportamiento;
 	this.comportamiento_active = false;
+	this.music;
     
     
 	this.setComportamiento = function(comportamiento)
@@ -102,8 +103,6 @@ Tunki.Game.prototype = {
 	    
 	    this.music = this.game.add.audio('museosound',1,true);
         this.music.play('',0,1,true);
-	    
-	    
 	},
 
 	update: function() {

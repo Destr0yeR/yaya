@@ -17,13 +17,6 @@ Comportamiento.prototype={
         this.count = count;
         this.orientation = orientation;
         
-<<<<<<< HEAD
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
-        }
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallB.push(this.walls.create(710, 0+60*i, 'killerwall'));
-=======
         if(count%2 == 1)
         {
             for (i = 0; i < this.WALLZISE; i++){
@@ -42,7 +35,6 @@ Comportamiento.prototype={
                 if(orientation == 'horizontal')
                     this.wallB.push(this.walls.create(700, 0+100*i, 'killerwall'));
             }
->>>>>>> 515c434c5185075a1e03a1a1fb941b2a90018dda
         }
         this.objects = this.game.add.group();
         this.objects.enableBody = true;
@@ -72,13 +64,14 @@ Comportamiento.prototype={
                     this.wallB[i].body.velocity.x = -WallVelocity;
             }
         }
+        this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
     },
     setActive :function(value){
         this.active=value;
     },
     
     crash : function(){
-        if(this.active){
+        //if(this.active){
                 //console.log("xD");        
                 
                 //alert(this.objects);
@@ -101,14 +94,14 @@ Comportamiento.prototype={
                         
                     }
                 }
-          }
+          //}
     },
     
     destroy_all: function(){
-        if(this.active){
+        //if(this.active){
             this.walls.destroy();
             this.objects.destroy();
-        }
+       // }
     } 
     
 };
