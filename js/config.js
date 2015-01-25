@@ -7,6 +7,7 @@ var Screen = function(){
 
 var Scenario = 0;
 
+
 var DoorUp   	= 1;
 var DoorDown 	= 2;
 var DoorRight	= 3;

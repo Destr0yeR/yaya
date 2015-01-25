@@ -30,6 +30,8 @@ Tunki.Game = function(game) {
 		this.was_colliding	= false;
 	};
 
+	this.scenario = triggers_map[Scenario];
+
 	this.enigmaText;
 	this.enigmaBackground;
 	this.enigma = new Enigma("");
@@ -45,6 +47,18 @@ Tunki.Game = function(game) {
 	this.pictures_stack;
 	this.pictures;
 
+	this.pictures_stack;
+
+   	this.doors_stack;
+
+	this.doors_stack_up;	
+
+	this.doors_stack_down;
+
+	this.doors_stack_left;
+
+	this.doors_stack_right;
+
 	this.map = new Map('background_game', triggers_map[Scenario]);
 
 };
@@ -55,7 +69,7 @@ Tunki.Game.prototype = {
 
 	    this.game.add.sprite(0, 0, 'background_game');   
 
-	   	this.player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
+	   	this.player = this.game.add.sprite(_screen.width/2-50, _screen.height/2-50, 'dude');
 
 	   	this.game.physics.arcade.enable(this.player);
 
@@ -178,6 +192,8 @@ Tunki.Game.prototype = {
 	    		}
 	    	}
 	    }
+	    this.set_up();
+	   	
 
 	   	this.createEnigma();
 
@@ -185,7 +201,10 @@ Tunki.Game.prototype = {
 	},
 
 	update: function() {
-		var collide = this.game.physics.arcade.collide(this.player, pictures_stack, this.createEnigma, null, this);
+
+		console.log(Scenario);
+
+		var collide = this.game.physics.arcade.collide(this.player, this.pictures_stack, this.createEnigma, null, this);
 		if(collide)
 		{
 			this.player.is_colliding = true;
@@ -195,10 +214,10 @@ Tunki.Game.prototype = {
 			this.player.is_colliding = false;
 		}
 
-		this.game.physics.arcade.overlap(this.player, doors_stack_up, this.changeScenarieUp, null, this);
-		this.game.physics.arcade.overlap(this.player, doors_stack_down, this.changeScenarieDown, null, this);
-		this.game.physics.arcade.overlap(this.player, doors_stack_left, this.changeScenarieLeft, null, this);
-		this.game.physics.arcade.overlap(this.player, doors_stack_right, this.changeScenarieRight, null, this);
+		this.game.physics.arcade.overlap(this.player, this.doors_stack_up, this.changeScenarieUp, null, this);
+		this.game.physics.arcade.overlap(this.player, this.doors_stack_down, this.changeScenarieDown, null, this);
+		this.game.physics.arcade.overlap(this.player, this.doors_stack_left, this.changeScenarieLeft, null, this);
+		this.game.physics.arcade.overlap(this.player, this.doors_stack_right, this.changeScenarieRight, null, this);
 
 	    this.player.body.velocity.x = 0;
 	    this.player.body.velocity.y = 0;
@@ -316,11 +335,12 @@ Tunki.Game.prototype = {
 		}
 	},
 	changeScenarie: function(scene){
-		this.game.state.start('Scenario'+scene);
+		Scenario = scene;
+		this.delete_all();
+		this.set_up();
 	},
 	findScenarie: function(scene, where)
 	{
-		console.log(scene);
 		var x = -1;
 		var y = -1;
 
@@ -380,5 +400,93 @@ Tunki.Game.prototype = {
 			}
 		}
 
+	},
+
+	set_up: function() {
+
+		
+		this.player.body.x = _screen.width/2-50;
+		this.player.body.y = _screen.height/2-50;
+
+		this.map = new Map('background_game', triggers_map[Scenario]);
+
+		this.pictures_stack = this.game.add.group();
+	   	this.pictures_stack.enableBody = true;
+
+	   	this.doors_stack = this.game.add.group();
+		this.doors_stack.enableBody = true;	
+
+		this.doors_stack_up = this.game.add.group();
+		this.doors_stack_up.enableBody = true;		
+
+		this.doors_stack_down = this.game.add.group();
+		this.doors_stack_down.enableBody = true;
+
+		this.doors_stack_left = this.game.add.group();
+		this.doors_stack_left.enableBody = true;
+
+		this.doors_stack_right = this.game.add.group();
+		this.doors_stack_right.enableBody = true;
+
+	   	pictures 	= new Array();
+	   	doors 		= new Array();
+	   	doors_up 	= new Array();
+	   	doors_down  = new Array();
+	   	doors_left  = new Array();
+	   	doors_right = new Array();
+
+ 
+		for (var  i = 0 ; i < 6 ;  i++ )
+	    {
+	    	for(var j = 0 ; j < 8 ; j++ )
+	    	{
+
+	    		var trigger = this.map.trigger;
+	    		if( trigger[i][j] == Picture )
+	    		{
+		    		var picture = this.pictures_stack.create( j*100 , i*100 , 'picture');
+				   	picture.body.immovable = true;
+				   	pictures.push(picture);	
+	    		}
+	    		else if ( trigger[i][j] == DoorUp )
+	    		{
+	    			var door = this.doors_stack_up.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_up.push(door);	  		
+	    		}
+	    		else if ( trigger[i][j] == DoorDown ) 
+	    		{
+	    			var door = this.doors_stack_down.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_down.push(door);
+	    		}
+	    		else if ( trigger[i][j] == DoorLeft ) 
+	    		{
+	    			var door = this.doors_stack_left.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_left.push(door);
+	    		}
+	    		else if ( trigger[i][j] == DoorRight )
+	    		{
+	    			var door = this.doors_stack_right.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_right.push(door);
+	    		}
+	    	}
+	    }
+	},
+
+	delete_all: function() {
+		this.pictures_stack.destroy();
+
+	   	this.doors_stack.destroy();	
+
+		this.doors_stack_up.destroy();		
+
+		this.doors_stack_down.destroy();
+
+		this.doors_stack_left.destroy();
+
+		this.doors_stack_right.destroy();
 	}
 };
