@@ -17,13 +17,6 @@ Comportamiento.prototype={
         this.count = count;
         this.orientation = orientation;
         
-<<<<<<< HEAD
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
-        }
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallB.push(this.walls.create(710, 0+60*i, 'killerwall'));
-=======
         if(count%2 == 1)
         {
             for (i = 0; i < this.WALLZISE; i++){
@@ -42,7 +35,6 @@ Comportamiento.prototype={
                 if(orientation == 'horizontal')
                     this.wallB.push(this.walls.create(700, 0+100*i, 'killerwall'));
             }
->>>>>>> 515c434c5185075a1e03a1a1fb941b2a90018dda
         }
         this.objects = this.game.add.group();
         this.objects.enableBody = true;
@@ -52,19 +44,6 @@ Comportamiento.prototype={
     },
     
     update: function(){
-<<<<<<< HEAD
-        if(this.active){
-            for (i = 0; i < this.WALLZISE; i++){
-                this.wallA[i].body.velocity.x = WallVelocity;
-            }
-            for (i = 0; i < this.WALLZISE; i++){
-                this.wallB[i].body.velocity.x = -WallVelocity;
-            }
-                   
-            //this.game.physics.arcade.overlap(this.player, this.walls, this.crash());
-            this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
-        
-=======
 
         if(this.count%2 == 1)
         {
@@ -84,25 +63,25 @@ Comportamiento.prototype={
                 if(this.orientation == 'horizontal')
                     this.wallB[i].body.velocity.x = -WallVelocity;
             }
->>>>>>> 515c434c5185075a1e03a1a1fb941b2a90018dda
         }
+        this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
     },
     setActive :function(value){
         this.active=value;
     },
     
     crash : function(){
-        if(this.active){
+        //if(this.active){
                 //console.log("xD");        
                 
                 //alert(this.objects);
                 this.blood = this.objects.create(this.player.body.x+10,this.player.body.y+10, 'blood');
-                console.log(this.startcrashing);
+               // console.log(this.startcrashing);
                 if(this.startcrashing == false){
                     this.startcrashing = true;
                     var currentdate = new Date();
                     this.timestart =currentdate.getTime();
-                    console.log('inicio '+this.timestart);
+                    //console.log('inicio '+this.timestart);
                  
                 }else{
                     var currentdate = new Date();
@@ -110,19 +89,19 @@ Comportamiento.prototype={
                     if(actualtime > this.timestart + 2000){
                         this.startcrashing = false;
                        // console.log('inicio '+this.timestart);
-                        console.log('fin '+actualtime);
+                      //  console.log('fin '+actualtime);
                         this.game.state.start('GameOver');
                         
                     }
                 }
-          }
+          //}
     },
     
     destroy_all: function(){
-        if(this.active){
+        //if(this.active){
             this.walls.destroy();
             this.objects.destroy();
-        }
+       // }
     } 
     
 };

@@ -76,12 +76,12 @@ Comportamiento.prototype={
                 
                 //alert(this.objects);
                 this.blood = this.objects.create(this.player.body.x+10,this.player.body.y+10, 'blood');
-                console.log(this.startcrashing);
+               // console.log(this.startcrashing);
                 if(this.startcrashing == false){
                     this.startcrashing = true;
                     var currentdate = new Date();
                     this.timestart =currentdate.getTime();
-                    console.log('inicio '+this.timestart);
+                    //console.log('inicio '+this.timestart);
                  
                 }else{
                     var currentdate = new Date();
@@ -89,7 +89,7 @@ Comportamiento.prototype={
                     if(actualtime > this.timestart + 2000){
                         this.startcrashing = false;
                        // console.log('inicio '+this.timestart);
-                        console.log('fin '+actualtime);
+                      //  console.log('fin '+actualtime);
                         this.game.state.start('GameOver');
                         
                     }
