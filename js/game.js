@@ -61,12 +61,14 @@ Tunki.Game = function(game) {
 
 	this.map = new Map('background_game', triggers_map[Scenario]);
 	this.comportamiento;
-
+    
+    
 	this.setComportamiento = function(comportamiento)
 	{
 		this.comportamiento = comportamiento;
-	}
-
+	};
+	this.comportamiento = new Comportamiento(game);
+    console.log(this.comportamiento);
 };
 
 Tunki.Game.prototype = {
@@ -428,7 +430,7 @@ Tunki.Game.prototype = {
 	    	}
 	    }
 
-	    this.comportamiento.setUp();
+	    this.comportamiento.setUp(this.player);
 	    	
 	    this.createEnigma();
 	},
@@ -457,6 +459,6 @@ Tunki.Game.prototype = {
 
 		this.doors_stack_right.destroy();
 
-		this.comportamiento.destroy();
+		this.comportamiento.destroy_all();
 	}
 };

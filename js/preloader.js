@@ -20,6 +20,9 @@ Tunki.Preloader.prototype = {
 		this.load.image('kero', 'assets/kero.jpg');
 		this.load.image('ekeko', 'assets/ekeko.png');		
 		this.load.image('luna', 'assets/luna.jpg');
+		
+		this.load.image('killerwall', 'assets/killerwall.png');
+		this.load.image('blood', 'assets/blood.png');
 
 		this.load.image('Tunki', 'assets/dude.png');
 		this.load.image('background_game', 'assets/Escenario/scenario1.jpg');
