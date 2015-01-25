@@ -11,9 +11,9 @@ Tunki.Preloader.prototype = {
 
 		this.load.image('button_start', 'assets/menu/play.png');
 		this.load.image('button_credit', 'assets/menu/credit.png');
-		this.load.image('button_retry', 'assets/button_retry.png');
+		this.load.image('button_retry', 'assets/retry.png');
 
-		this.load.image('how_to', 'assets/menu/background.jpg');
+		this.load.image('how_to', 'assets/howto.jpg');
 
 		this.load.image('picture', 'assets/picture.png');
 
@@ -23,9 +23,11 @@ Tunki.Preloader.prototype = {
 		this.load.image('sky', 'assets/sky.png');
 	    this.load.image('ground', 'assets/platform.png');
 	    this.load.image('star', 'assets/star.png');
-	    this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-	    this.load.image('enigma_background', 'assets/enigma_background.png');
-	    this.load.image('close_enigma', 'assets/close.png');
+	    //this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+	    this.load.spritesheet('dude', 'assets/Sprites/thief.png', 125 , 125);
+
+	    this.load.image('enigma_background', 'assets/marco.png');
+	    this.load.image('close_enigma', 'assets/close.jpg');
 
 	    this.load.image('door', 'assets/door.png');
 

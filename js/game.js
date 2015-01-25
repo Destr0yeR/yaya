@@ -45,7 +45,7 @@ Tunki.Game = function(game) {
 	this.pictures_stack;
 	this.pictures;
 
-	this.map = new Map('sky', triggers_map[Scenario]);
+	this.map = new Map('background_game', triggers_map[Scenario]);
 
 };
 
@@ -62,9 +62,11 @@ Tunki.Game.prototype = {
 	   	this.player.body.bounce.y = 0.2;
 
 	    this.player.body.collideWorldBounds = true;
-	    
-	    this.player.animations.add('left', [0, 1, 2, 3], 10, true);
-	    this.player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+	    this.player.animations.add('right', [0, 1, 2, 3], 10, true);
+	    this.player.animations.add('down', [4, 5, 6, 7], 10, false);
+	    this.player.animations.add('left', [8, 9, 10, 11], 10, true);
+	    this.player.animations.add('up', [12, 13, 14, 15], 10, true);
 
 	    this.objects = this.game.add.group();
 	    this.objects.enableBody = true;
@@ -76,11 +78,28 @@ Tunki.Game.prototype = {
 	   	pictures_stack.enableBody = true;
 
 	   	doors_stack = this.game.add.group();
-		doors_stack.enableBody = true;		   	
+		doors_stack.enableBody = true;	
+
+		doors_stack_up = this.game.add.group();
+		doors_stack_up.enableBody = true;		
+
+		doors_stack_down = this.game.add.group();
+		doors_stack_down.enableBody = true;
+
+		doors_stack_left = this.game.add.group();
+		doors_stack_left.enableBody = true;
+
+		doors_stack_right = this.game.add.group();
+		doors_stack_right.enableBody = true;
 
 	   	pictures 	= new Array();
 	   	doors 		= new Array();
+	   	doors_up 	= new Array();
+	   	doors_down  = new Array();
+	   	doors_left  = new Array();
+	   	doors_right = new Array();
 
+ 
 		for (var  i = 0 ; i < 6 ;  i++ )
 	    {
 	    	for(var j = 0 ; j < 8 ; j++ )
@@ -92,11 +111,29 @@ Tunki.Game.prototype = {
 				   	picture.body.immovable = true;
 				   	pictures.push(picture);	
 	    		}
-	    		else if ( trigger[i][j] == DoorUp || trigger[i][j] == DoorDown || trigger[i][j] == DoorLeft || trigger[i][j] == DoorRight)
+	    		else if ( trigger[i][j] == DoorUp )
 	    		{
-	    			var door = doors_stack.create( j*100 , i*100 , 'door');
+	    			var door = doors_stack_up.create( j*100 , i*100 , 'door');
 				   	door.body.immovable = true;
-				 	doors.push(door);	  		
+				 	doors_up.push(door);	  		
+	    		}
+	    		else if ( trigger[i][j] == DoorDown ) 
+	    		{
+	    			var door = doors_stack_down.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_down.push(door);
+	    		}
+	    		else if ( trigger[i][j] == DoorLeft ) 
+	    		{
+	    			var door = doors_stack_left.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_left.push(door);
+	    		}
+	    		else if ( trigger[i][j] == DoorRight )
+	    		{
+	    			var door = doors_stack_right.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors_right.push(door);
 	    		}
 	    	}
 	    }
@@ -117,16 +154,10 @@ Tunki.Game.prototype = {
 			this.player.is_colliding = false;
 		}
 
-		var overlap = this.game.physics.arcade.collide(this.player, doors_stack, this.changeScenarie, null, this);
-
-		if(overlap)
-		{
-			this.player.is_overlaping = true;
-		}
-		else
-		{
-			this.player.is_overlaping = false;	
-		}
+		this.game.physics.arcade.overlap(this.player, doors_stack_up, this.changeScenarieUp, null, this);
+		this.game.physics.arcade.overlap(this.player, doors_stack_down, this.changeScenarieDown, null, this);
+		this.game.physics.arcade.overlap(this.player, doors_stack_left, this.changeScenarieLeft, null, this);
+		this.game.physics.arcade.overlap(this.player, doors_stack_right, this.changeScenarieRight, null, this);
 
 	    this.player.body.velocity.x = 0;
 	    this.player.body.velocity.y = 0;
@@ -153,10 +184,12 @@ Tunki.Game.prototype = {
 	    if (this.cursors.up.isDown)
 	    {
 	        this.player.body.velocity.y = -150;
+	        this.player.animations.play('up');
 	    }
 	    else if (this.cursors.down.isDown)
 	    {
 	    	this.player.body.velocity.y = 150;
+	    	this.player.animations.play('down');
 	    }
 		
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.A))
@@ -190,8 +223,8 @@ Tunki.Game.prototype = {
 			messages = this.game.add.group();
 		   	messages.enableBody = false;
 
-		   	enigmaBackground = messages.create( _screen.width/2 - _screen.width/4 , _screen.height/2 - _screen.height/4 , 'enigma_background' );
-		   	enigmaClose = messages.create( _screen.width*3/4 - 25 , _screen.height/2 - _screen.height/4 , 'close_enigma');
+		   	enigmaBackground = messages.create( 0, 0 , 'enigma_background' );
+		   	enigmaClose = messages.create( _screen.width - 100 , 60 , 'close_enigma');
 		   	enigmaClose.inputEnabled = true;
 
 		   	//add enigma text
@@ -208,7 +241,103 @@ Tunki.Game.prototype = {
 		   	console.log(this.iterations);
 		}
 	},
-	changeScenarie: function(){
-		console.log('cambiaste de escenario');
+	changeScenarieUp: function(){
+		scene = this.findScenarie(Scenario,'up');
+
+		if(!(scene <1 || scene > 10))
+		{
+			this.changeScenarie(scene);
+		}
 	},
+	changeScenarieDown: function(){
+		scene = this.findScenarie(Scenario,'down');
+
+		if(!(scene <1 || scene > 10))
+		{
+			this.changeScenarie(scene);
+		}
+	},
+	changeScenarieLeft: function(){
+		scene = this.findScenarie(Scenario,'left');
+
+		if(!(scene <1 || scene > 10))
+		{
+			this.changeScenarie(scene);
+		}
+
+	},
+	changeScenarieRight: function(){
+		scene = this.findScenarie(Scenario,'right');
+
+		if(!(scene <1 || scene > 10))
+		{
+			this.changeScenarie(scene);
+		}
+	},
+	changeScenarie: function(scene){
+		this.game.state.start('Scenario'+scene);
+	},
+	findScenarie: function(scene, where)
+	{
+		console.log(scene);
+		var x = -1;
+		var y = -1;
+
+		for(var i = 0 ; i < 6 ; ++i )
+		{
+			for(var j = 0 ; j < 4 ; ++j)
+			{
+				if(global_map[i][j] == scene)
+				{
+					x = j;
+					y = i;
+					break;
+				}
+			}
+		}
+
+		switch(where)
+		{
+			case 'left':
+			{
+				if(x > 0)
+				{
+					return global_map[y][x-1];
+				}
+				else 
+					return -1;
+				break;
+			}
+			case 'right':
+			{
+				if(x < 3)
+					return global_map[y][x+1];
+				else 
+					return -1;
+				break;
+			}
+			case 'up':
+			{
+				if(y > 0)
+					return global_map[y-1][x];
+				else 
+					return -1;
+				break;
+			}
+			case 'down':
+			{
+				if(y < 5)
+					return global_map[y+1][x];
+				else 
+					return -1;
+				break;
+			}
+			default:
+			{
+				return -1;
+				break;
+			}
+		}
+
+	}
 };
