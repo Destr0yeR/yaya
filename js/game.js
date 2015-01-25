@@ -101,6 +101,11 @@ Tunki.Game.prototype = {
 	   	this.createEnigma();
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
+	    
+	    this.music = this.game.add.audio('museosound',1,true);
+        this.music.play('',0,1,true);
+	    
+	    
 	},
 
 	update: function() {

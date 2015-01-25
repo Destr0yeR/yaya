@@ -2,47 +2,54 @@
 
 var Comportamiento=function(game){
     this.game = game;
-     
+    this.active = false;
 }
 
 
 Comportamiento.prototype={    
     setUp : function(player){
-        this.player = player;
-        this.wallA=new Array();
-        this.wallB=new Array();
-        this.WALLZISE = 10;
-        this.walls = this.game.add.group();
-        this.walls.enableBody = true;
-        
-        for (i = 0; i < this.WALLZISE; i++){
+        if(this.activate){
+            this.player = player;
+            this.wallA=new Array();
+            this.wallB=new Array();
+            this.WALLZISE = 10;
+            this.walls = this.game.add.group();
+            this.walls.enableBody = true;
+            
+            for (i = 0; i < this.WALLZISE; i++){
                 this.wallA.push(this.walls.create(0, 0+60*i, 'killerwall'));
-        }
-        for (i = 0; i < this.WALLZISE; i++){
+            }
+            for (i = 0; i < this.WALLZISE; i++){
                 this.wallB.push(this.walls.create(710, 0+60*i, 'killerwall'));
+            }
+            this.objects = this.game.add.group();
+            this.objects.enableBody = true;
+            this.startcrashing = false;
+            this.timestart = 0;
         }
-        this.objects = this.game.add.group();
-        this.objects.enableBody = true;
-        this.startcrashing = false;
-        this.timestart = 0;
     },
     
     update: function(){
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallA[i].body.velocity.x = WallVelocity;
+        if(this.active){
+            for (i = 0; i < this.WALLZISE; i++){
+                this.wallA[i].body.velocity.x = WallVelocity;
+            }
+            for (i = 0; i < this.WALLZISE; i++){
+                this.wallB[i].body.velocity.x = -WallVelocity;
+            }
+                   
+            //this.game.physics.arcade.overlap(this.player, this.walls, this.crash());
+            this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
+        
         }
-        for (i = 0; i < this.WALLZISE; i++){
-            this.wallB[i].body.velocity.x = -WallVelocity;
-        }
-            
-            
-             //this.game.physics.arcade.overlap(this.player, this.walls, this.crash());
-         this.game.physics.arcade.collide(this.player, this.walls, this.crash,null, this);
+    },
+    setActive :function(value){
+        this.active=value;
     },
     
     crash : function(){
-                //console.log("xD");
-                
+        if(this.active){
+                //console.log("xD");        
                 
                 //alert(this.objects);
                 this.blood = this.objects.create(this.player.body.x+10,this.player.body.y+10, 'blood');
@@ -64,14 +71,14 @@ Comportamiento.prototype={
                         
                     }
                 }
-               
-                
-                
+          }
     },
     
     destroy_all: function(){
-        this.walls.destroy();
-        this.objects.destroy();
+        if(this.active){
+            this.walls.destroy();
+            this.objects.destroy();
+        }
     } 
     
 };

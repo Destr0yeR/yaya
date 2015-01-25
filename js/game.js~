@@ -101,6 +101,11 @@ Tunki.Game.prototype = {
 	   	this.createEnigma();
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
+	    
+	    this.music = game.add.audio('museosound',1,true);
+        this.music.play('',0,1,true);
+	    
+	    
 	},
 
 	update: function() {
@@ -459,6 +464,6 @@ Tunki.Game.prototype = {
 
 		this.doors_stack_right.destroy();
 
-		this.comportamiento.destroy();
+		this.comportamiento.destroy_all();
 	}
 };
