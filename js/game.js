@@ -7,7 +7,6 @@ var Enigma = function(message){
 
 	this.setMessage = function(new_message){
 		this.message = new_message;
-		console.log(this.message);
 	};
 };
 
@@ -69,7 +68,6 @@ Tunki.Game = function(game) {
 		this.comportamiento = comportamiento;
 	};
 	this.comportamiento = new Comportamiento(game);
-    console.log(this.comportamiento);
 };
 
 Tunki.Game.prototype = {
@@ -111,7 +109,6 @@ Tunki.Game.prototype = {
 
 		var key_horizontal = true;
 		var key_vertical = true;
-		console.log(Scenario);
 
 		var collide = this.game.physics.arcade.collide(this.player, this.pictures_stack, this.createEnigma, null, this);
 		if(collide)
@@ -127,6 +124,8 @@ Tunki.Game.prototype = {
 		this.game.physics.arcade.overlap(this.player, this.doors_stack_down, this.changeScenarieDown, null, this);
 		this.game.physics.arcade.overlap(this.player, this.doors_stack_left, this.changeScenarieLeft, null, this);
 		this.game.physics.arcade.overlap(this.player, this.doors_stack_right, this.changeScenarieRight, null, this);
+
+		this.game.physics.arcade.overlap(this.player, this.xx, this.collectItem, null , this);
 
 	    this.player.body.velocity.x = 0;
 	    this.player.body.velocity.y = 0;
@@ -185,6 +184,11 @@ Tunki.Game.prototype = {
 	    	this.game.state.start('GameOver');
 	    }
 
+	    if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+	    {
+	    	//this.game.state.start('GameOver');
+	    }
+
 	    if(this.comportamiento_active)
 	    {
 	    	this.comportamiento.update();
@@ -199,7 +203,6 @@ Tunki.Game.prototype = {
 	},
 
 	createEnigma: function() {
-		console.log("createEnigma");
 
 		var exist = false;
 
@@ -244,7 +247,6 @@ Tunki.Game.prototype = {
 		   	enigmaText.x = _screen.width/2 - enigmaText.width/2;
 		   	enigmaText.y = _screen.height/2 - enigmaText.height/2;
 		   	this.enigma.active = true;
-		   	console.log(this.iterations);
 		}
 	},
 	changeScenarieUp: function(){
@@ -594,25 +596,25 @@ Tunki.Game.prototype = {
 	    		}
 			    else if ( trigger[i][j] == Vicuna )
 	    		{
-	    			var vicuna = this.vicuna_stack.create( j*100 , i*100 , 'vicuna');
+	    			var vicuna = this.xx.create( j*100 , i*100 , 'vicuna');
 				   	vicuna.body.immovable = true;
 				    vicunas.push(vicuna);	  		
 	    		}
 	    		else if ( trigger[i][j] == Kero )
 	    		{
-	    			var kero = this.kero_stack.create( j*100 , i*100 , 'kero');
+	    			var kero = this.xx.create( j*100 , i*100 , 'kero');
 				   	kero.body.immovable = true;
 				    keros.push(kero);	  		
 	    		}
 	    		else if ( trigger[i][j] == Ekeko )
 	    		{
-	    			var ekeko = this.ekeko_stack.create( j*100 , i*100 , 'ekeko');
+	    			var ekeko = this.xx.create( j*100 , i*100 , 'ekeko');
 				   	ekeko.body.immovable = true;
 				    ekekos.push(ekeko);	  		
 	    		}
 	    		else if ( trigger[i][j] == Luna )
 	    		{
-	    			var luna = this.luna_stack.create( j*100 , i*100 , 'luna');
+	    			var luna = this.xx.create( j*100 , i*100 , 'luna');
 				   	luna.body.immovable = true;
 				    lunas.push(luna);	  		
 	    		}
@@ -668,7 +670,7 @@ Tunki.Game.prototype = {
 	    		{
 	    			var cabeza = this.xx.create( j*100 , i*100 , 'cabezaClava');
 				   	cabeza.body.immovable = true;
-				    cabezas.push(luna);	  		
+				    cabezaclava.push(luna);	  		
 	    		}
 	    		else if ( trigger[i][j] == LineaNazca )
 	    		{
@@ -713,8 +715,6 @@ Tunki.Game.prototype = {
 	   		var column = random;
 	   		random	= Math.floor(Math.random()*4);
 	   		var orientation;
-
-	   		console.log("random: "+random);
 
 	   		if(random%2)
 	   		{
@@ -761,5 +761,25 @@ Tunki.Game.prototype = {
 		}
 
 		this.comportamiento_active = false;
+	},
+
+	collectItem: function(player, item) {
+    	
+
+	    if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+	    {
+    		console.log(item);
+    		console.log(item['key']);
+    		console.log(puzzles_map[1][2]);
+
+    		for(var i = 0 ; i < 6 ; i++)
+    		{
+	    		if(item['key'] ==  puzzles_map[i][Answer])
+	    		{
+	    			console.log("respuesta correcta");
+			    	item.kill();
+	    		}
+	    	}
+	    }
 	}
 };

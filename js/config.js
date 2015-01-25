@@ -45,7 +45,35 @@ var Tierra = 31;
 var Estrella = 32;
 var Sol = 33;
 
-
+var map_items = new Array();
 
 var WallVelocity = 50;
 
+map_items["vicuna"] = 6;
+map_items["kero"]	= 7;
+map_items["ekeko"]  = 8;
+map_items["luna"]	= 9;
+map_items["tumi"]	= 10;
+map_items["chakana"]= 11;
+map_items["casco"]	= 12;
+map_items["pistola"]= 13;
+map_items["caballo"]= 14;
+map_items["mapa"]	= 15;
+map_items["sarcofago"]=16;
+map_items["alpaca"] = 17;
+map_items["llama"]	= 18;
+map_items["papa"]	= 19;
+map_items["maiz"]	= 20;
+map_items["quinua"]	= 21;
+map_items["chirimoya"] = 22;
+map_items["bota"]	= 23;
+map_items["caballo"] = 24;
+map_items["sombrero"] = 25;
+map_items["bala"]	= 26;
+map_items["cabezaclava"] = 27;
+map_items["lieanazca"] = 28;
+map_items["portadasol"] = 29;
+map_items["luna"] = 30;
+map_items["tierra"] = 31;
+map_items["estrella"] = 32;
+map_items["sol"] = 33;
