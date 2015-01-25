@@ -5,7 +5,7 @@ var Screen = function(){
 };
 
 
-var Scenario = 1;
+var Scenario = 4;
 
 
 var DoorUp   	= 1;
