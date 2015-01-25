@@ -40,7 +40,7 @@ Tunki.Preloader.prototype = {
 
 	    this.load.image('wall', 'assets/cuadrado.png');
 	    
-	    this.load.audio('museosound', ['assets/squit.mp3', 'assets/audio/SoundEffects/squit.ogg']);
+	    this.load.audio('museosound', ['assets/museo.mp3']);
 
 	},
 	create: function() {

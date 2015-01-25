@@ -19,7 +19,33 @@ var Vicuna = 6;
 var Kero = 7;
 var Ekeko = 8; 
 var Luna = 9;
+var Tumi = 10
+var Chakana = 10;
+var Kero = 11;
+var Caso = 12;
+var Pistola = 13;
+var Caballo = 14;
+var Mapa = 15;
+var Sarcofago = 16;
+var Alpaca = 17;
+var Llama = 18;
+var Papa = 19;
+var Maiz = 20;
+var Quinua = 21;
+var Chirimoya = 22;
+var Bota = 23;
+var Caballo = 24;
+var Sombrero = 25;
+var Bala = 26;
+var CabezaClava = 27;
+var LineaNazca  = 28;
+var PortadaSol = 29;
+var Luna = 30;
+var Tierra = 31;
+var Estrella = 32;
+var Sol = 33;
 
 
-var WallVelocity = 80;
+
+var WallVelocity = 50;
 
