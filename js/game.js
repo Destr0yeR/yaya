@@ -1,6 +1,7 @@
-var Enigma = function(){
+var Enigma = function(message){
 
-	this.message = "ADIVINANZA";
+	if(typeof(message) === 'undefined') message = "ADIVINANZA";
+	this.message = message;
 
 	this.active  = false;
 
@@ -10,6 +11,13 @@ var Enigma = function(){
 	};
 };
 
+var Map = function(file_name, trigger ){
+
+	if(typeof(file_name) === 'undefined') file_name = "default";
+
+	this.background = file_name;
+	this.trigger    = trigger;
+}
 
 Tunki.Game = function(game) {
 	this.player = function(){
@@ -24,25 +32,28 @@ Tunki.Game = function(game) {
 
 	this.enigmaText;
 	this.enigmaBackground;
-	this.enigma = new Enigma();
+	this.enigma = new Enigma("");
 	this.messages;
 
 	this.cursors;
 
 	this.objects;
 	this.iterations 		= 0;
-	this.is_overlapped 	= false;
+	this.is_overlapped 		= false;
 	this.was_overlapped 	= false;
 
 	this.pictures_stack;
 	this.pictures;
+
+	this.map = new Map('sky', triggers_map[Scenario]);
+
 };
 
 Tunki.Game.prototype = {
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	    this.game.add.sprite(0, 0, 'sky');   
+	    this.game.add.sprite(0, 0, 'background_game');   
 
 	   	this.player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
 
@@ -63,17 +74,31 @@ Tunki.Game.prototype = {
 	   	pictures_stack = this.game.add.group();
 	   	pictures_stack.enableBody = true;
 
-	   	pictures = new Array();
+	   	doors_stack = this.game.add.group();
+		doors_stack.enableBody = true;		   	
 
-		for( var i = 0 ; i < 4 ; ++i)
-		{
-			var x = ( Math.random() * 8 );
-			var y = ( Math.random() * 6 );
+	   	pictures 	= new Array();
+	   	doors 		= new Array();
 
-			var picture = pictures_stack.create( x*100 , y*100 , 'picture');
-		   	picture.body.immovable = true;
-		   	pictures.push(picture);						
-		}
+		for (var  i = 0 ; i < 6 ;  i++ )
+	    {
+	    	for(var j = 0 ; j < 8 ; j++ )
+	    	{
+	    		var trigger = this.map.trigger;
+	    		if( trigger[i][j] == Picture )
+	    		{
+		    		var picture = pictures_stack.create( j*100 , i*100 , 'picture');
+				   	picture.body.immovable = true;
+				   	pictures.push(picture);	
+	    		}
+	    		else if ( trigger[i][j] == DoorUp || trigger[i][j] == DoorDown || trigger[i][j] == DoorLeft || trigger[i][j] == DoorRight)
+	    		{
+	    			var door = doors_stack.create( j*100 , i*100 , 'door');
+				   	door.body.immovable = true;
+				 	doors.push(door);	  		
+	    		}
+	    	}
+	    }
 
 	   	this.createEnigma();
 
@@ -89,6 +114,17 @@ Tunki.Game.prototype = {
 		else
 		{
 			this.player.is_colliding = false;
+		}
+
+		var overlap = this.game.physics.arcade.collide(this.player, doors_stack, this.changeScenarie, null, this);
+
+		if(overlap)
+		{
+			this.player.is_overlaping = true;
+		}
+		else
+		{
+			this.player.is_overlaping = false;	
 		}
 
 	    this.player.body.velocity.x = 0;
@@ -170,5 +206,8 @@ Tunki.Game.prototype = {
 		   	this.enigma.active = true;
 		   	console.log(this.iterations);
 		}
-	}
+	},
+	changeScenarie: function(){
+		console.log('cambiaste de escenario');
+	},
 };

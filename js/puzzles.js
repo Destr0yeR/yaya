@@ -1,0 +1,6 @@
+var puzzles_map = [
+
+
+
+
+];
