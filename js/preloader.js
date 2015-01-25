@@ -29,6 +29,8 @@ Tunki.Preloader.prototype = {
 
 	    this.load.image('door', 'assets/door.png');
 
+	    this.load.image('wall', 'assets/cuadrado.png');
+
 	},
 	create: function() {
 		this.game.state.start('MainMenu');

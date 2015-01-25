@@ -13,3 +13,4 @@ var DoorRight	= 3;
 var DoorLeft	= 4;
 
 var Picture = 5;
+

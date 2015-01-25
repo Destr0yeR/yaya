@@ -1,4 +1,5 @@
 Tunki.Menu = function(game) {};
+
 Tunki.Menu.prototype = {
 	create: function() {
 		this.add.sprite(0, 0, 'background_main');
@@ -12,5 +13,8 @@ Tunki.Menu.prototype = {
 	},
 	startGame: function() {
 		this.game.state.start('Howto');
+	},
+	creditsGame: function() {
+		console.log('credits');
 	}
 };

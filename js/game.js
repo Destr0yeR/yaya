@@ -62,6 +62,7 @@ Tunki.Game.prototype = {
 	   	this.player.body.bounce.y = 0.2;
 
 	    this.player.body.collideWorldBounds = true;
+	    
 	    this.player.animations.add('left', [0, 1, 2, 3], 10, true);
 	    this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
