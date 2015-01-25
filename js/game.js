@@ -109,7 +109,9 @@ Tunki.Game.prototype = {
 	    this.music = this.game.add.audio('museosound',1,true);
         this.music.play('',0,1,true);
         
-        
+        this.startingGame = true;
+        var d = new Date();
+        this.initialMessageTime = d.getTime();
 	},
 
 	update: function() {
@@ -745,9 +747,7 @@ Tunki.Game.prototype = {
 	   	}
 	    	
 	    this.createEnigma();
-	    this.startingGame = true;
-        var d = new Date();
-        this.initialMessageTime = d.getTime(); 
+	    
 	},
 
 	destroy_all: function() {

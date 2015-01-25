@@ -117,7 +117,7 @@ Tunki.Game.prototype = {
 	    if(this.startingGame){
 	        var d = new Date();
 	        var time = d.getTime();
-	        if(time>this.initialMessageTime+2000){
+	        if(time>this.initialMessageTime+1000){
 	            console.log('tiempo actual :'+time );
 	            this.startingGame = false;
        	        this.destroyEnigma();
@@ -745,9 +745,7 @@ Tunki.Game.prototype = {
 	   	}
 	    	
 	    this.createEnigma();
-	    this.startingGame = true;
-        var d = new Date();
-        this.initialMessageTime = d.getTime(); 
+	    
 	},
 
 	destroy_all: function() {
