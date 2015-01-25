@@ -474,7 +474,7 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorUp )
 	    		{
-	    			this.door_up = this.doors_stack_up.create( j*100 , i*100 , 'door_up');
+	    			this.door_up = this.doors_stack_up.create( j*100 + 20, i*100 -10, 'door_up');
 	    			this.door_up.animations.add('open', [2, 1, 0],5,true);
 				   	this.door_up.body.immovable = true;
 				 	doors_up.push(this.door_up);	  		
@@ -488,15 +488,15 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorLeft ) 
 	    		{
-	    			this.door_left = this.doors_stack_left.create( j*100 , i*100 , 'door_left');
+	    			this.door_left = this.doors_stack_left.create( j*100 + 110, i*100 + 50 , 'door_left');
 	    			this.door_left.animations.add('open',[0,1,2],5,true);
 				   	this.door_left.body.immovable = true;
 				 	doors_left.push(this.door_left);
 	    		}
 	    		else if ( trigger[i][j] == DoorRight )
 	    		{
-	    			this.door_right = this.doors_stack_right.create( j*100 , i*100 , 'door_right');
-	    			this.door_right.animations.add('open',[0,1,2],5,true);
+	    			this.door_right = this.doors_stack_right.create( j*100 -80, i*100 + 50 , 'door_right');
+	    			this.door_right.animations.add('open',[2,1,0],5,true);
 				   	this.door_right.body.immovable = true;
 				 	doors_right.push(this.door_right);
 	    		}
