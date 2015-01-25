@@ -56,7 +56,7 @@ Tunki.Game = function(game) {
 	this.doors_stack_left;
 	this.doors_stack_right;
 
-	this.map = new Map('background_game', triggers_map[Scenario]);
+	this.map = new Map('f_center', triggers_map[Scenario]);
 	this.comportamiento;
 	this.comportamiento_active = false;
 	this.music;
@@ -74,7 +74,7 @@ Tunki.Game.prototype = {
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	    this.game.add.sprite(0, 0, 'background_game');   
+	    this.game.add.sprite(0, 0, 'f_center');   
 
 	   	this.player = this.game.add.sprite(_screen.width/2-50, _screen.height/2-50, 'dude');
 
@@ -107,6 +107,8 @@ Tunki.Game.prototype = {
 
 	update: function() {
 
+		var key_horizontal = true;
+		var key_vertical = true;
 		console.log(Scenario);
 
 		var collide = this.game.physics.arcade.collide(this.player, this.pictures_stack, this.createEnigma, null, this);
@@ -151,11 +153,9 @@ Tunki.Game.prototype = {
 	    }
 	    else
 	    {
-	        this.player.animations.stop();
-
-	        this.player.frame = 4;
+	    	key_horizontal = false;
 	    }
-	    
+
 	    if (this.cursors.up.isDown)
 	    {
 	        this.player.body.velocity.y = -150;
@@ -165,6 +165,17 @@ Tunki.Game.prototype = {
 	    {
 	    	this.player.body.velocity.y = 150;
 	    	this.player.animations.play('down');
+	    }
+	    else
+	    {
+	    	key_vertical = false;
+	    }
+	    if(!key_horizontal && !key_vertical)
+	    {
+	        //  Stand still
+	        this.player.animations.stop();
+
+	        this.player.frame = 4;
 	    }
 		
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.A))
@@ -176,6 +187,7 @@ Tunki.Game.prototype = {
 	    {
 	    	this.comportamiento.update();
 	    }
+
 	},
 
 	destroyEnigma: function() {
@@ -404,7 +416,7 @@ Tunki.Game.prototype = {
 	    		}
 	    		else if ( trigger[i][j] == DoorDown ) 
 	    		{
-	    			var door = this.doors_stack_down.create( j*100 , i*100 , 'door');
+	    			var door = this.doors_stack_down.create( j*100 + 30, i*100 + 55, 'door_down');
 				   	door.body.immovable = true;
 				 	doors_down.push(door);
 	    		}

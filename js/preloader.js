@@ -42,6 +42,21 @@ Tunki.Preloader.prototype = {
 	    
 	    this.load.audio('museosound', ['assets/museo.mp3']);
 
+
+	    /*Fondos
+	    */
+
+	    this.load.image('f_up', 'assets/fondos/f_arriba.jpg');
+	    this.load.image('f_down', 'assets/fondos/f_abajo.jpg');
+	    this.load.image('f_left', 'assets/fondos/f_izquierda.jpg');
+	    this.load.image('f_right', 'assets/fondos/f_derecha.jpg');
+	    this.load.image('f_center', 'assets/fondos/f_centro.jpg');
+
+	    this.load.spritesheet('door_down', 'assets/door_down.png', 125 , 60);
+
+	    this.load.image('column_red', 'assets/fondos/ojonegro.jpg');
+	    this.load.image('column_black', 'assets/fondos/ojorojo.jpg');
+
 	},
 	create: function() {
 		this.game.state.start('MainMenu');
