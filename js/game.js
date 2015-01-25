@@ -542,7 +542,7 @@ Tunki.Game.prototype = {
 	   	tierras = new Array();
 	   	estrellas = new Array();
 	   	soles = new Array();
-	   	
+	   	vicunas = new Array();
 
 	   	this.door_down;
 	   	this.door_up;
