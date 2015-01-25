@@ -163,6 +163,18 @@ Tunki.Game.prototype = {
 	createEnigma: function() {
 		console.log("createEnigma");
 
+		var exist = false;
+
+		for(var i = 0; i<6; i++)
+		{
+			if(puzzles_map[i][Index_Scenario] == Scenario)
+			{
+				this.enigma.setMessage(puzzles_map[i][Message]);
+				exist = true;
+				break;
+			}
+		}
+
 		if(this.player.is_colliding)
 		{
 			this.player.was_colliding = true;
@@ -174,7 +186,7 @@ Tunki.Game.prototype = {
 
 		this.player.is_colliding = true;
 
-		if(this.player.is_colliding && !this.player.was_colliding && !this.enigma.active)
+		if(this.player.is_colliding && !this.player.was_colliding && !this.enigma.active && exist)
 		{
 			messages = this.game.add.group();
 		   	messages.enableBody = false;
@@ -300,11 +312,11 @@ Tunki.Game.prototype = {
 
 	set_up: function() {
 
+		this.map = new Map('background_game', triggers_map[Scenario]);
 		
 		this.player.body.x = _screen.width/2-50;
 		this.player.body.y = _screen.height/2-50;
 
-		this.map = new Map('background_game', triggers_map[Scenario]);
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
@@ -370,6 +382,8 @@ Tunki.Game.prototype = {
 	    		}
 	    	}
 	    }
+	    	
+	    this.createEnigma();
 	},
 
 	delete_all: function() {
