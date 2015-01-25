@@ -411,6 +411,10 @@ Tunki.Game.prototype = {
 		
 		this.player.body.x = _screen.width/2-50;
 		this.player.body.y = _screen.height/2-50;
+		
+		
+		this.xx=this.game.add.group();
+		this.xx.enableBody =  true;
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
@@ -429,7 +433,69 @@ Tunki.Game.prototype = {
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
+	   	
+	   	this.tumi_stack = this.game.add.group();
+	   	this.tumi_stack.enableBody = true;
+	   	
+	   	this.chakana_stack = this.game.add.group();
+	   	this.chakana_stack.enableBody = true;
 
+        this.pistola_stack = this.game.add.group();
+	   	this.pistola_stack.enableBody = true;
+
+        this.mapa_stack = this.game.add.group();
+	   	this.mapa_stack.enableBody = true;
+        
+        this.sarcofago_stack = this.game.add.group();
+	   	this.sarcofago_stack.enableBody = true;
+	   	
+	   	this.llama_stack = this.game.add.group();
+	   	this.llama_stack.enableBody = true;
+
+        this.papa_stack = this.game.add.group();
+	   	this.papa_stack.enableBody = true;
+
+        this.maiz_stack = this.game.add.group();
+	   	this.maiz_stack.enableBody = true;
+        
+        this.quinua_stack = this.game.add.group();
+	   	this.quinua_stack.enableBody = true;
+	   	
+	   	this.chirimoya_stack = this.game.add.group();
+	   	this.chirimoya_stack.enableBody = true;
+	   	
+	   	this.bota_stack = this.game.add.group();
+	   	this.bota_stack.enableBody = true;
+	   	
+	   	this.caballo_stack = this.game.add.group();
+	   	this.caballo_stack.enableBody = true;
+	   	
+	   	this.sombrero_stack = this.game.add.group();
+	   	this.sombrero_stack.enableBody = true;
+	   	
+	   	this.bala_stack = this.game.add.group();
+	   	this.bala_stack.enableBody = true;
+	   	
+	   	
+	   	this.cabezaclava_stack = this.game.add.group();
+	   	this.cabezaclava_stack.enableBody = true;
+	   	
+	   	this.lineanazca_stack = this.game.add.group();
+	   	this.lineanazca_stack.enableBody = true;
+	   	
+	   	this.portadasol_stack = this.game.add.group();
+	   	this.portadasol_stack.enableBody = true;
+	   	
+	   	this.tierra_stack = this.game.add.group();
+	   	this.tierra_stack.enableBody = true;
+	   	
+	   	this.estrella_stack = this.game.add.group();
+	   	this.estrella_stack.enableBody = true;
+	   	
+	   	this.sol_stack = this.game.add.group();
+	   	this.sol_stack.enableBody = true;
+	   	
+	   	
 	   	this.doors_stack = this.game.add.group();
 		this.doors_stack.enableBody = true;	
 
@@ -451,6 +517,32 @@ Tunki.Game.prototype = {
 	   	doors_down  = new Array();
 	   	doors_left  = new Array();
 	   	doors_right = new Array();
+	   	
+	   	tumis = new Array();
+	   	chakanas = new Array();
+	   	keros = new Array();
+	   	cascos = new Array();
+	   	pistolas = new Array();
+	   	caballos = new Array();
+	   	mapas = new Array();
+	   	sarcofagos = new Array();
+	   	alpacas = new Array();
+	   	papas = new Array();
+	   	maizs = new Array();
+	   	quinuas = new Array();
+	   	chirimoyas = new Array();
+	   	botas = new Array();
+	   	caballos = new Array();
+	   	sombreros = new Array();
+	   	balas = new Array();
+	   	cabezaclavas = new Array();
+	   	lineanazcas = new Array();
+	   	portadasols = new Array();
+	   	lunas = new Array();
+	   	tierras = new Array();
+	   	estrellas = new Array();
+	   	soles = new Array();
+	   	vicunas = new Array();
 
 	   	this.door_down;
 	   	this.door_up;
@@ -502,25 +594,103 @@ Tunki.Game.prototype = {
 	    		}
 			    else if ( trigger[i][j] == Vicuna )
 	    		{
-	    			var vicuna = vicuna_stack.create( j*100 , i*100 , 'vicuna');
+	    			var vicuna = this.vicuna_stack.create( j*100 , i*100 , 'vicuna');
 				   	vicuna.body.immovable = true;
 				    vicunas.push(vicuna);	  		
 	    		}
 	    		else if ( trigger[i][j] == Kero )
 	    		{
-	    			var kero = kero_stack.create( j*100 , i*100 , 'kero');
+	    			var kero = this.kero_stack.create( j*100 , i*100 , 'kero');
 				   	kero.body.immovable = true;
 				    keros.push(kero);	  		
 	    		}
 	    		else if ( trigger[i][j] == Ekeko )
 	    		{
-	    			var ekeko = ekeko_stack.create( j*100 , i*100 , 'ekeko');
+	    			var ekeko = this.ekeko_stack.create( j*100 , i*100 , 'ekeko');
 				   	ekeko.body.immovable = true;
 				    ekekos.push(ekeko);	  		
 	    		}
 	    		else if ( trigger[i][j] == Luna )
 	    		{
-	    			var luna = luna_stack.create( j*100 , i*100 , 'luna');
+	    			var luna = this.luna_stack.create( j*100 , i*100 , 'luna');
+				   	luna.body.immovable = true;
+				    lunas.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == Tumi )
+	    		{
+	    			var tumi = this.xx.create( j*100 , i*100 , 'tumi');
+				   	tumi.body.immovable = true;
+				    tumis.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == Chakana )
+	    		{
+	    			var chakana = this.xx.create( j*100 , i*100 , 'chakana');
+				   	chakana.body.immovable = true;
+				    chakanas.push(chakana);	  		
+	    		}
+	    		else if ( trigger[i][j] == Casco )
+	    		{
+	    			var casco = this.xx.create( j*100 , i*100 , 'casco');
+				   	casco.body.immovable = true;
+				    cascos.push(casco);	  		
+	    		}
+	    		else if ( trigger[i][j] == Pistola )
+	    		{
+	    			var pistola = this.xx.create( j*100 , i*100 , 'pistola');
+				   	pistola.body.immovable = true;
+				    pistolas.push(pistola);	  		
+	    		}
+	    		else if ( trigger[i][j] == Caballo )
+	    		{
+	    			var caballo = this.xx.create( j*100 , i*100 , 'caballo');
+				   	caballo.body.immovable = true;
+				    caballos.push(caballo);	  		
+	    		}
+	    		else if ( trigger[i][j] == Mapa )
+	    		{
+	    			var mapa = this.xx.create( j*100 , i*100 , 'mapa');
+				    mapa.body.immovable = true;
+				    mapas.push(mapa);	  		
+	    		}
+	    		else if ( trigger[i][j] == Sombrero )
+	    		{
+	    			var sombrero = this.xx.create( j*100 , i*100 , 'sombrero');
+				   	sombrero.body.immovable = true;
+				    sombreros.push(sombrero);	  		
+	    		}
+	    		else if ( trigger[i][j] == Bala )
+	    		{
+	    			var bala = this.xx.create( j*100 , i*100 , 'bala');
+				   	bala.body.immovable = true;
+				    balas.push(bala);	  		
+	    		}
+	    		else if ( trigger[i][j] == CabezaClava )
+	    		{
+	    			var cabeza = this.xx.create( j*100 , i*100 , 'cabezaClava');
+				   	cabeza.body.immovable = true;
+				    cabezas.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == LineaNazca )
+	    		{
+	    			var lineanazca = this.xx.create( j*100 , i*100 , 'lineasNazca');
+				   	lineanazca.body.immovable = true;
+				    lineaNazcas.push(lineanazca);	  		
+	    		}
+	    		else if ( trigger[i][j] == PortadaSol )
+	    		{
+	    			var portada = this.xx.create( j*100 , i*100 , 'portadaSol');
+				   	portada.body.immovable = true;
+				    portadasols.push(portada);	  		
+	    		}
+	    		else if ( trigger[i][j] == Tierra )
+	    		{
+	    			var tierra = this.xx.create( j*100 , i*100 , 'tierra');
+				   	tierra.body.immovable = true;
+				    tierras.push(tierra);	  		
+	    		}
+	    		else if ( trigger[i][j] == Luna )
+	    		{
+	    			var luna = this.luna_stack.create( j*100 , i*100 , 'luna');
 				   	luna.body.immovable = true;
 				    lunas.push(luna);	  		
 	    		}

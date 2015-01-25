@@ -52,15 +52,16 @@ Tunki.Game = function(game) {
    	this.doors_stack;
 
 	this.doors_stack_up;	
-
 	this.doors_stack_down;
-
 	this.doors_stack_left;
-
 	this.doors_stack_right;
 
-	this.map = new Map('background_game', triggers_map[Scenario]);
+	this.map = new Map('f_center', triggers_map[Scenario]);
 	this.comportamiento;
+	this.comportamiento_active = false;
+	this.music;
+
+	this.timestart = 0;
     
     
 	this.setComportamiento = function(comportamiento)
@@ -75,7 +76,7 @@ Tunki.Game.prototype = {
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	    this.game.add.sprite(0, 0, 'background_game');   
+	    this.game.add.sprite(0, 0, 'f_center');   
 
 	   	this.player = this.game.add.sprite(_screen.width/2-50, _screen.height/2-50, 'dude');
 
@@ -102,14 +103,14 @@ Tunki.Game.prototype = {
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 	    
-	    this.music = game.add.audio('museosound',1,true);
+	    this.music = this.game.add.audio('museosound',1,true);
         this.music.play('',0,1,true);
-	    
-	    
 	},
 
 	update: function() {
 
+		var key_horizontal = true;
+		var key_vertical = true;
 		console.log(Scenario);
 
 		var collide = this.game.physics.arcade.collide(this.player, this.pictures_stack, this.createEnigma, null, this);
@@ -129,10 +130,15 @@ Tunki.Game.prototype = {
 
 	    this.player.body.velocity.x = 0;
 	    this.player.body.velocity.y = 0;
-
+	    
 	    if (this.cursors.left.isDown)
 	    {
 	        this.player.body.velocity.x = -150;
+
+	        if(this.player.body.x < 100)
+	        {
+	        	this.player.body.velocity.x = 0;
+	        }
 
 	        this.player.animations.play('left');
 	    }
@@ -140,15 +146,18 @@ Tunki.Game.prototype = {
 	    {
 	        this.player.body.velocity.x = 150;
 
+	        if(this.player.body.x > 600)
+	        {
+	        	this.player.body.velocity.x = 0;
+	        }
+
 	        this.player.animations.play('right');
 	    }
 	    else
 	    {
-	        this.player.animations.stop();
-
-	        this.player.frame = 4;
+	    	key_horizontal = false;
 	    }
-	    
+
 	    if (this.cursors.up.isDown)
 	    {
 	        this.player.body.velocity.y = -150;
@@ -159,13 +168,28 @@ Tunki.Game.prototype = {
 	    	this.player.body.velocity.y = 150;
 	    	this.player.animations.play('down');
 	    }
+	    else
+	    {
+	    	key_vertical = false;
+	    }
+	    if(!key_horizontal && !key_vertical)
+	    {
+	        //  Stand still
+	        this.player.animations.stop();
+
+	        this.player.frame = 4;
+	    }
 		
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.A))
 	    {
 	    	this.game.state.start('GameOver');
 	    }
 
-	    this.comportamiento.update();
+	    if(this.comportamiento_active)
+	    {
+	    	this.comportamiento.update();
+	    }
+
 	},
 
 	destroyEnigma: function() {
@@ -225,35 +249,92 @@ Tunki.Game.prototype = {
 	},
 	changeScenarieUp: function(){
 		scene = this.findScenarie(Scenario,'up');
+		this.door_up.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 	},
 	changeScenarieDown: function(){
 		scene = this.findScenarie(Scenario,'down');
+		this.door_down.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
-		}
+	    if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
+	    }
+
 	},
 	changeScenarieLeft: function(){
 		scene = this.findScenarie(Scenario,'left');
+		this.door_left.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 
 	},
 	changeScenarieRight: function(){
 		scene = this.findScenarie(Scenario,'right');
+		this.door_right.animations.play('open');
 
-		if(!(scene <1 || scene > 10))
-		{
-			this.changeScenarie(scene);
+		if(this.timestart == 0)
+	    {
+	    	var currentdate = new Date();
+	    	this.timestart = currentdate.getTime();
+	    }
+	    var currentdate = new Date();
+	    var currentTime = currentdate.getTime();
+
+
+	    if(currentTime > this.timestart + 500)
+	    {
+	    	this.timestart = 0;
+			if(!(scene <1 || scene > 10))
+			{
+				this.changeScenarie(scene);
+			}
 		}
 	},
 	changeScenarie: function(scene){
@@ -330,6 +411,10 @@ Tunki.Game.prototype = {
 		
 		this.player.body.x = _screen.width/2-50;
 		this.player.body.y = _screen.height/2-50;
+		
+		
+		this.xx=this.game.add.group();
+		this.xx.enableBody =  true;
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
@@ -348,7 +433,69 @@ Tunki.Game.prototype = {
 
 		this.pictures_stack = this.game.add.group();
 	   	this.pictures_stack.enableBody = true;
+	   	
+	   	this.tumi_stack = this.game.add.group();
+	   	this.tumi_stack.enableBody = true;
+	   	
+	   	this.chakana_stack = this.game.add.group();
+	   	this.chakana_stack.enableBody = true;
 
+        this.pistola_stack = this.game.add.group();
+	   	this.pistola_stack.enableBody = true;
+
+        this.mapa_stack = this.game.add.group();
+	   	this.mapa_stack.enableBody = true;
+        
+        this.sarcofago_stack = this.game.add.group();
+	   	this.sarcofago_stack.enableBody = true;
+	   	
+	   	this.llama_stack = this.game.add.group();
+	   	this.llama_stack.enableBody = true;
+
+        this.papa_stack = this.game.add.group();
+	   	this.papa_stack.enableBody = true;
+
+        this.maiz_stack = this.game.add.group();
+	   	this.maiz_stack.enableBody = true;
+        
+        this.quinua_stack = this.game.add.group();
+	   	this.quinua_stack.enableBody = true;
+	   	
+	   	this.chirimoya_stack = this.game.add.group();
+	   	this.chirimoya_stack.enableBody = true;
+	   	
+	   	this.bota_stack = this.game.add.group();
+	   	this.bota_stack.enableBody = true;
+	   	
+	   	this.caballo_stack = this.game.add.group();
+	   	this.caballo_stack.enableBody = true;
+	   	
+	   	this.sombrero_stack = this.game.add.group();
+	   	this.sombrero_stack.enableBody = true;
+	   	
+	   	this.bala_stack = this.game.add.group();
+	   	this.bala_stack.enableBody = true;
+	   	
+	   	
+	   	this.cabezaclava_stack = this.game.add.group();
+	   	this.cabezaclava_stack.enableBody = true;
+	   	
+	   	this.lineanazca_stack = this.game.add.group();
+	   	this.lineanazca_stack.enableBody = true;
+	   	
+	   	this.portadasol_stack = this.game.add.group();
+	   	this.portadasol_stack.enableBody = true;
+	   	
+	   	this.tierra_stack = this.game.add.group();
+	   	this.tierra_stack.enableBody = true;
+	   	
+	   	this.estrella_stack = this.game.add.group();
+	   	this.estrella_stack.enableBody = true;
+	   	
+	   	this.sol_stack = this.game.add.group();
+	   	this.sol_stack.enableBody = true;
+	   	
+	   	
 	   	this.doors_stack = this.game.add.group();
 		this.doors_stack.enableBody = true;	
 
@@ -370,7 +517,39 @@ Tunki.Game.prototype = {
 	   	doors_down  = new Array();
 	   	doors_left  = new Array();
 	   	doors_right = new Array();
+	   	
+	   	tumis = new Array();
+	   	chakanas = new Array();
+	   	keros = new Array();
+	   	cascos = new Array();
+	   	pistolas = new Array();
+	   	caballos = new Array();
+	   	mapas = new Array();
+	   	sarcofagos = new Array();
+	   	alpacas = new Array();
+	   	papas = new Array();
+	   	maizs = new Array();
+	   	quinuas = new Array();
+	   	chirimoyas = new Array();
+	   	botas = new Array();
+	   	caballos = new Array();
+	   	sombreros = new Array();
+	   	balas = new Array();
+	   	cabezaclavas = new Array();
+	   	lineanazcas = new Array();
+	   	portadasols = new Array();
+	   	lunas = new Array();
+	   	tierras = new Array();
+	   	estrellas = new Array();
+	   	soles = new Array();
+	   	
 
+	   	this.door_down;
+	   	this.door_up;
+	   	this.door_left;
+	   	this.door_right;
+
+	   	var is_there_a_picture;
  
 		for (var  i = 0 ; i < 6 ;  i++ )
 	    {
@@ -383,59 +562,171 @@ Tunki.Game.prototype = {
 		    		var picture = this.pictures_stack.create( j*100 , i*100 , 'picture');
 				   	picture.body.immovable = true;
 				   	pictures.push(picture);	
+				   	is_there_a_picture = true;
 	    		}
 	    		else if ( trigger[i][j] == DoorUp )
 	    		{
-	    			var door = this.doors_stack_up.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_up.push(door);	  		
+	    			this.door_up = this.doors_stack_up.create( j*100 , i*100 , 'door_up');
+	    			this.door_up.animations.add('open', [2, 1, 0],5,true);
+				   	this.door_up.body.immovable = true;
+				 	doors_up.push(this.door_up);	  		
 	    		}
 	    		else if ( trigger[i][j] == DoorDown ) 
 	    		{
-	    			var door = this.doors_stack_down.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_down.push(door);
+	    			this.door_down = this.doors_stack_down.create( j*100 + 30, i*100 + 55, 'door_down');
+	    			this.door_down.animations.add('open', [0, 1, 2],5,true);
+				   	this.door_down.body.immovable = true;
+				 	doors_down.push(this.door_down);
 	    		}
 	    		else if ( trigger[i][j] == DoorLeft ) 
 	    		{
-	    			var door = this.doors_stack_left.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_left.push(door);
+	    			this.door_left = this.doors_stack_left.create( j*100 , i*100 , 'door_left');
+	    			this.door_left.animations.add('open',[0,1,2],5,true);
+				   	this.door_left.body.immovable = true;
+				 	doors_left.push(this.door_left);
 	    		}
 	    		else if ( trigger[i][j] == DoorRight )
 	    		{
-	    			var door = this.doors_stack_right.create( j*100 , i*100 , 'door');
-				   	door.body.immovable = true;
-				 	doors_right.push(door);
+	    			this.door_right = this.doors_stack_right.create( j*100 , i*100 , 'door_right');
+	    			this.door_right.animations.add('open',[0,1,2],5,true);
+				   	this.door_right.body.immovable = true;
+				 	doors_right.push(this.door_right);
 	    		}
 			    else if ( trigger[i][j] == Vicuna )
 	    		{
-	    			var vicuna = vicuna_stack.create( j*100 , i*100 , 'vicuna');
+	    			var vicuna = this.vicuna_stack.create( j*100 , i*100 , 'vicuna');
 				   	vicuna.body.immovable = true;
 				    vicunas.push(vicuna);	  		
 	    		}
 	    		else if ( trigger[i][j] == Kero )
 	    		{
-	    			var kero = kero_stack.create( j*100 , i*100 , 'kero');
+	    			var kero = this.kero_stack.create( j*100 , i*100 , 'kero');
 				   	kero.body.immovable = true;
 				    keros.push(kero);	  		
 	    		}
 	    		else if ( trigger[i][j] == Ekeko )
 	    		{
-	    			var ekeko = ekeko_stack.create( j*100 , i*100 , 'ekeko');
+	    			var ekeko = this.ekeko_stack.create( j*100 , i*100 , 'ekeko');
 				   	ekeko.body.immovable = true;
 				    ekekos.push(ekeko);	  		
 	    		}
 	    		else if ( trigger[i][j] == Luna )
 	    		{
-	    			var luna = luna_stack.create( j*100 , i*100 , 'luna');
+	    			var luna = this.luna_stack.create( j*100 , i*100 , 'luna');
+				   	luna.body.immovable = true;
+				    lunas.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == Tumi )
+	    		{
+	    			var tumi = this.xx.create( j*100 , i*100 , 'tumi');
+				   	tumi.body.immovable = true;
+				    tumis.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == Chakana )
+	    		{
+	    			var chakana = this.xx.create( j*100 , i*100 , 'chakana');
+				   	chakana.body.immovable = true;
+				    chakanas.push(chakana);	  		
+	    		}
+	    		else if ( trigger[i][j] == Casco )
+	    		{
+	    			var casco = this.xx.create( j*100 , i*100 , 'casco');
+				   	casco.body.immovable = true;
+				    cascos.push(casco);	  		
+	    		}
+	    		else if ( trigger[i][j] == Pistola )
+	    		{
+	    			var pistola = this.xx.create( j*100 , i*100 , 'pistola');
+				   	pistola.body.immovable = true;
+				    pistolas.push(pistola);	  		
+	    		}
+	    		else if ( trigger[i][j] == Caballo )
+	    		{
+	    			var caballo = this.xx.create( j*100 , i*100 , 'caballo');
+				   	caballo.body.immovable = true;
+				    caballos.push(caballo);	  		
+	    		}
+	    		else if ( trigger[i][j] == Mapa )
+	    		{
+	    			var mapa = this.xx.create( j*100 , i*100 , 'mapa');
+				    mapa.body.immovable = true;
+				    mapas.push(mapa);	  		
+	    		}
+	    		else if ( trigger[i][j] == Sombrero )
+	    		{
+	    			var sombrero = this.xx.create( j*100 , i*100 , 'sombrero');
+				   	sombrero.body.immovable = true;
+				    sombreros.push(sombrero);	  		
+	    		}
+	    		else if ( trigger[i][j] == Bala )
+	    		{
+	    			var bala = this.xx.create( j*100 , i*100 , 'bala');
+				   	bala.body.immovable = true;
+				    balas.push(bala);	  		
+	    		}
+	    		else if ( trigger[i][j] == CabezaClava )
+	    		{
+	    			var cabeza = this.xx.create( j*100 , i*100 , 'cabezaClava');
+				   	cabeza.body.immovable = true;
+				    cabezas.push(luna);	  		
+	    		}
+	    		else if ( trigger[i][j] == LineaNazca )
+	    		{
+	    			var lineanazca = this.xx.create( j*100 , i*100 , 'lineasNazca');
+				   	lineanazca.body.immovable = true;
+				    lineaNazcas.push(lineanazca);	  		
+	    		}
+	    		else if ( trigger[i][j] == PortadaSol )
+	    		{
+	    			var portada = this.xx.create( j*100 , i*100 , 'portadaSol');
+				   	portada.body.immovable = true;
+				    portadasols.push(portada);	  		
+	    		}
+	    		else if ( trigger[i][j] == Tierra )
+	    		{
+	    			var tierra = this.xx.create( j*100 , i*100 , 'tierra');
+				   	tierra.body.immovable = true;
+				    tierras.push(tierra);	  		
+	    		}
+	    		else if ( trigger[i][j] == Luna )
+	    		{
+	    			var luna = this.luna_stack.create( j*100 , i*100 , 'luna');
 				   	luna.body.immovable = true;
 				    lunas.push(luna);	  		
 	    		}
 	    	}
 	    }
 
-	    this.comportamiento.setUp(this.player);
+	    if(is_there_a_picture)
+	    {
+	    	this.comportamiento_active = false;
+	    }
+	    else
+	    {
+	    	this.comportamiento_active = true;
+	    }
+
+	   	if(this.comportamiento_active)
+	   	{
+	   		var random	= Math.floor(Math.random()*4);
+
+	   		var column = random;
+	   		random	= Math.floor(Math.random()*4);
+	   		var orientation;
+
+	   		console.log("random: "+random);
+
+	   		if(random%2)
+	   		{
+	   			orientation = 'vertical';
+	   		}
+	   		else
+	   		{
+	   			orientation = 'horizontal';
+	   		}
+
+	    	this.comportamiento.setUp(this.player,column,orientation);
+	   	}
 	    	
 	    this.createEnigma();
 	},
@@ -464,6 +755,11 @@ Tunki.Game.prototype = {
 
 		this.doors_stack_right.destroy();
 
-		this.comportamiento.destroy_all();
+		if(this.comportamiento_active)
+		{
+			this.comportamiento.destroy_all();
+		}
+
+		this.comportamiento_active = false;
 	}
 };

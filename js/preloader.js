@@ -16,10 +16,34 @@ Tunki.Preloader.prototype = {
 		this.load.image('how_to', 'assets/howto.jpg');
 
 		this.load.image('picture', 'assets/picture.png');
-		this.load.image('vicuna', 'assets/vicuna.jpg');
-		this.load.image('kero', 'assets/kero.jpg');
-		this.load.image('ekeko', 'assets/ekeko.png');		
-		this.load.image('luna', 'assets/luna.jpg');
+		this.load.image('vicuna', 'assets/objetos/vicuna.png');
+		this.load.image('kero', 'assets/objetos/kero.png');
+		this.load.image('ekeko', 'assets/objetos/kero.png');		
+		this.load.image('luna', 'assets/objetos/luna.png');
+		this.load.image('tumi', 'assets/objetos/kero.png');
+		this.load.image('chakana', 'assets/objetos/chacana.png');
+		this.load.image('casco', 'assets/objetos/casco.png');
+		this.load.image('pistola', 'assets/objetos/bala.png');
+		this.load.image('caballo', 'assets/objetos/caballo.png');
+		this.load.image('mapa', 'assets/objetos/mapa.png');
+		this.load.image('sarcofago', 'assets/objetos/sipan.png');
+		this.load.image('alpaca', 'assets/objetos/alpaca.png');
+		this.load.image('llama', 'assets/objetos/llama.png');
+		this.load.image('papa', 'assets/objetos/papa.png');
+		this.load.image('maiz', 'assets/objetos/choclo.png');
+		this.load.image('quinua', 'assets/objetos/yuca.png');
+		this.load.image('chirimoya', 'assets/objetos/chirimoya.png');
+		this.load.image('bota', 'assets/objetos/bota.png');
+		this.load.image('caballo', 'assets/objetos/caballo.png');
+		this.load.image('sombrero', 'assets/objetos/junin.png');
+		this.load.image('bala', 'assets/objetos/bala.png');
+		this.load.image('cabezaClava', 'assets/objetos/huaco.png');
+		this.load.image('lineaNazca', 'assets/objetos/nazca.png');
+		this.load.image('portadaSol', 'assets/objetos/portal.png');
+		this.load.image('luna', 'assets/objetos/luna.png');
+		this.load.image('tierra', 'assets/objetos/montana.png');
+		this.load.image('estrella', 'assets/objetos/estrella.png');
+		this.load.image('sol', 'assets/objetos/sol.png');
 		
 		this.load.image('killerwall', 'assets/killerwall.png');
 		this.load.image('blood', 'assets/blood.png');
