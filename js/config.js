@@ -15,9 +15,10 @@ var DoorLeft	= 4;
 
 var Picture = 5;
 
-var Vicuna = 6
-var Kero = 7
-var Ekeko = 8 
-var Luna = 9
+var Vicuna = 6;
+var Kero = 7;
+var Ekeko = 8; 
+var Luna = 9;
 
+var WallVelocity = 50;
 
